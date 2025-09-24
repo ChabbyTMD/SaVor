@@ -1,0 +1,38 @@
+##############################
+# Variables you need to change
+##############################
+
+# path to the sample metadata CSV
+samples: "config/samples.csv" 
+
+# path to csv file with list of contigs to include (Required by wham sv caller)
+include_contigs: "config/include_contigs.csv"
+
+##############################
+# Optional configuration
+##############################
+
+# Enable/disable read sorting (useful for some datasets)
+sort_reads: false
+
+# Enable/disable duplicate marking
+mark_duplicates: true
+
+# Set a temporary directory for large files (optional)
+# bigtmp: "/tmp"
+
+# Remote reads configuration (optional)
+remote_reads: false
+# remote_reads_prefix: "gs://your-bucket/reads/"
+
+##############################
+# Benchmarking (optional)
+##############################
+
+# Enable benchmarking against truth sets
+svBenchmark: false
+
+# Benchmark Truth set paths (only needed if svBenchmark: true)
+deletions: "benchmark_truth/deletions.vcf.gz"
+duplications: "benchmark_truth/duplications.vcf.gz" 
+inversions: "benchmark_truth/inversions.vcf.gz"

@@ -1,0 +1,9 @@
+name: wham
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - wham
+  - htslib
+  - bcftools

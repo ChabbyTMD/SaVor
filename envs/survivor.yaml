@@ -1,0 +1,9 @@
+name: survivor
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bcftools
+  - htslib
+  - survivor
