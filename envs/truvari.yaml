@@ -4,5 +4,6 @@ channels:
   - bioconda
   - defaults
 dependencies:
+ - pip==25.1.1
  - pip:
     - truvari==5.3.0
