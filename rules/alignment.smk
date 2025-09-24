@@ -47,7 +47,7 @@ rule dedup:
     benchmark:
         "benchmarks/{refGenome}/sambamba_dedup/{sample}.txt"
     shell:
-        "sambamba markdup -t {threads} {input.bam} {output.dedupBam} 2> {log}"
+        "sambamba markdup -t {threads} {input.bam} {output.dedupBam} 2> {log}" #TODO: make this dynamic based on user provided threads
 
 rule download_reference:
     """Download reference genome if not provided by user, or copy custom reference."""
