@@ -15,7 +15,7 @@ rule bwa_map:
         "logs/{refGenome}/bwa_mem/{sample}/{run}.txt"
     benchmark:
         "benchmarks/{refGenome}/bwa_mem/{sample}_{run}.txt"
-    threads: 8
+    threads: 8 # TODO: make this dynamic based on user provided threads
     shell:
         "bwa-mem2 mem -t {threads} -R {params.rg} {input.ref} {input.r1} {input.r2} 2> {log} | samtools sort -o {output.bam} - && samtools index {output.bam} {output.bai}"
 
@@ -50,20 +50,40 @@ rule dedup:
         "sambamba markdup -t {threads} {input.bam} {output.dedupBam} 2> {log}"
 
 rule download_reference:
-    """Download reference genome if not provided by user."""
+    """Download reference genome if not provided by user, or copy custom reference."""
     output:
         ref="results/{refGenome}/data/genome/{refGenome}.fna",
     params:
-        refGenome="{refGenome}"
+        refGenome="{refGenome}",
+        custom_ref_path=lambda wc: get_custom_reference_path(wc.refGenome),
+        has_custom_ref=lambda wc: has_custom_reference(wc.refGenome)
     conda:
         "../envs/fastq2bam.yml"
-    shell:
-        """
-        datasets download genome accession {params.refGenome} --filename {params.refGenome}.zip
-        unzip -j {params.refGenome}.zip -d results/{wildcards.refGenome}/data/genome/
-        mv results/{wildcards.refGenome}/data/genome/*.fna {output.ref}
-        rm {params.refGenome}.zip
-        """
+    run:
+        import os
+        import shutil
+        from pathlib import Path
+        
+        # Create output directory
+        output_dir = Path(output.ref).parent
+        output_dir.mkdir(parents=True, exist_ok=True)
+        
+        if params.has_custom_ref and params.custom_ref_path:
+            # Copy custom reference file
+            custom_ref_path = Path(params.custom_ref_path)
+            if custom_ref_path.exists():
+                print(f"Copying custom reference from {custom_ref_path} to {output.ref}")
+                shutil.copy2(custom_ref_path, output.ref)
+            else:
+                raise FileNotFoundError(f"Custom reference file not found: {custom_ref_path}")
+        else:
+            # Download reference using datasets
+            shell(f"""
+                datasets download genome accession {params.refGenome} --filename {params.refGenome}.zip
+                unzip -j {params.refGenome}.zip -d {output_dir}/
+                mv {output_dir}/*.fna {output.ref}
+                rm {params.refGenome}.zip
+                """)
 
 rule index_reference:
     """Create BWA and samtools indices for reference genome."""
