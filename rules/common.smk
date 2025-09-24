@@ -35,6 +35,24 @@ def parse_sample_sheet(config):
     """Parse sample sheet CSV file."""
     return pd.read_csv(config["samples"])
 
+def has_custom_reference(refGenome):
+    """Check if a custom reference path exists for the given refGenome."""
+    if config.get("use_custom_reference", False) and "refPath" in samples.columns:
+        # Get rows with this refGenome
+        ref_rows = samples[samples["refGenome"] == refGenome]
+        if not ref_rows.empty:
+            # Check if any row has a non-null refPath
+            ref_path = ref_rows["refPath"].iloc[0]
+            return pd.notna(ref_path) and str(ref_path).strip() != ""
+    return False
+
+def get_custom_reference_path(refGenome):
+    """Get the custom reference path for the given refGenome."""
+    if has_custom_reference(refGenome):
+        ref_rows = samples[samples["refGenome"] == refGenome]
+        return ref_rows["refPath"].iloc[0]
+    return None
+
 def get_bams(wc):
     """Get BAM files for SV calling - use final deduplicated BAMs if mark_duplicates is enabled."""
     out = {"bam": None, "bai": None}
