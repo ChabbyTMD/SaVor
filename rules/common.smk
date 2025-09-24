@@ -36,21 +36,59 @@ def parse_sample_sheet(config):
     return pd.read_csv(config["samples"])
 
 def has_custom_reference(refGenome):
-    """Check if a custom reference path exists for the given refGenome."""
-    if config.get("use_custom_reference", False) and "refPath" in samples.columns:
-        # Get rows with this refGenome
-        ref_rows = samples[samples["refGenome"] == refGenome]
-        if not ref_rows.empty:
-            # Check if any row has a non-null refPath
-            ref_path = ref_rows["refPath"].iloc[0]
-            return pd.notna(ref_path) and str(ref_path).strip() != ""
-    return False
+    """Check if a custom reference path exists for the given refGenome.
+    
+    Validates that all samples with the same refGenome have consistent refPath values.
+    Returns True if exactly one distinct non-empty refPath exists.
+    Returns False if no non-empty refPath exists.
+    Raises WorkflowError if multiple distinct non-empty refPath values exist.
+    """
+    if not config.get("use_custom_reference", False) or "refPath" not in samples.columns:
+        return False
+    
+    # Get all rows with this refGenome
+    ref_rows = samples[samples["refGenome"] == refGenome]
+    if ref_rows.empty:
+        return False
+    
+    # Collect all refPath values and normalize (treat NaN/empty/whitespace as missing)
+    ref_paths = []
+    for _, row in ref_rows.iterrows():
+        ref_path = row["refPath"]
+        if pd.notna(ref_path) and str(ref_path).strip():
+            ref_paths.append(str(ref_path).strip())
+    
+    # Check for consistency
+    unique_ref_paths = list(set(ref_paths))
+    
+    if len(unique_ref_paths) == 0:
+        # No non-empty refPath exists
+        return False
+    elif len(unique_ref_paths) == 1:
+        # Exactly one distinct non-empty refPath exists
+        return True
+    else:
+        # Multiple distinct non-empty refPath values exist
+        raise WorkflowError(
+            f"Inconsistent refPath values found for refGenome '{refGenome}': "
+            f"{unique_ref_paths}. All samples with the same refGenome must have "
+            f"the same refPath value or be empty/missing."
+        )
 
 def get_custom_reference_path(refGenome):
-    """Get the custom reference path for the given refGenome."""
+    """Get the custom reference path for the given refGenome.
+    
+    Returns the consistent refPath value if one exists, None otherwise.
+    """
     if has_custom_reference(refGenome):
+        # Get all rows with this refGenome
         ref_rows = samples[samples["refGenome"] == refGenome]
-        return ref_rows["refPath"].iloc[0]
+        
+        # Find the first non-empty refPath (they're all the same due to validation in has_custom_reference)
+        for _, row in ref_rows.iterrows():
+            ref_path = row["refPath"]
+            if pd.notna(ref_path) and str(ref_path).strip():
+                return str(ref_path).strip()
     return None
 
 def get_bams(wc):
