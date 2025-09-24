@@ -15,7 +15,7 @@ import pandas as pd
 configfile: "config/config.yaml"
 
 wildcard_constraints:
-    window="\d+"
+    window=r"\d+"
 
 samples = parse_sample_sheet(config)
 REFGENOME = samples['refGenome'].unique().tolist()
