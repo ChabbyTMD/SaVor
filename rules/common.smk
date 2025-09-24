@@ -8,7 +8,15 @@ import json
 from pathlib import Path
 from collections import defaultdict
 import pandas as pd
-from pkg_resources import parse_version
+try:
+    from importlib.metadata import version
+except ImportError:
+    # Fallback for Python < 3.8
+    from importlib_metadata import version
+
+def parse_version(v):
+    """Simple version parsing function"""
+    return tuple(map(int, v.split('.')))
 
 # Can't be less than 7 cuz of min version in snakefile
 SNAKEMAKE_VERSION = 8 if parse_version(snakemake.__version__) >= parse_version("8.0.0") else 7
