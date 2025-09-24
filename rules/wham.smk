@@ -10,7 +10,7 @@ rule wham_call:
 		"../envs/wham.yaml"
 	params:
 		contigs = lambda wc: read_contig_file(config["include_contigs"])
-	threads: 10
+	threads: 10 #TODO Make this dynamic based on user provided threads
 	shell:
 		"""
 		whamg -x {threads} -c {params.contigs} -a {input.ref} -f {input.bam} > {output.wham_vcf} 2> {log}
