@@ -9,7 +9,7 @@ rule wham_call:
 	conda:
 		"../envs/wham.yaml"
 	params:
-		contigs = read_contig_file(config["include_contigs"])
+		contigs = lambda wc: read_contig_file(config["include_contigs"])
 	threads: 10
 	shell:
 		"""
