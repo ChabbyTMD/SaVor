@@ -8,6 +8,9 @@ samples: "config/samples.csv"
 # path to csv file with list of contigs to include (Required by wham sv caller)
 include_contigs: "config/include_contigs.csv"
 
+# Check for refPath column in samples.csv and copy reference files if present
+use_custom_reference: true
+
 ##############################
 # Optional configuration
 ##############################
