@@ -8,4 +8,3 @@ dependencies:
   - bcftools==1.9
   - htslib==1.9
   - libgcc-ng==11.2.0
-  - openssl==1.0
