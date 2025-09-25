@@ -1,7 +1,7 @@
 # svArcher Standalone Pipeline
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/ChabbyTMD/snpArcher/main/workflow/modules/svArcher/img/svArcher_Logo.png" alt="svArcher Logo" width="150" height="190">
+<img src="img/svArcher_logo-1.png" alt="svArcher Logo" width="150" height="190">
 </div>
 
 *svArcher* is a standalone reproducible Snakemake pipeline designed to call structural variants (SVs) from short read genomic sequencing data. The pipeline performs:
@@ -23,7 +23,7 @@
 
 ## Directory Structure
 
-```
+```{text}
 svArcher_Standalone/
 ├── Snakefile                 # Main workflow file
 ├── config/
@@ -52,10 +52,12 @@ svArcher_Standalone/
 ## Installation
 
 ### Prerequisites
+
 - [Conda](https://docs.conda.io/en/latest/) or [Mamba](https://mamba.readthedocs.io/en/latest/)
-- [Snakemake](https://snakemake.readthedocs.io/en/stable/) (≥7.0.0)
+- [Snakemake](https://snakemake.readthedocs.io/en/stable/) (≥9.0)
 
 ### Setup
+
 1. Clone or download this repository
 2. Activate the existing snakemake environment:
 
@@ -66,7 +68,7 @@ conda activate snakemake
 **Note**: This pipeline assumes you have a conda environment named "snakemake" with Snakemake installed. If you don't have it, create one:
 
 ```bash
-conda create -c conda-forge -c bioconda -n snakemake snakemake>=7.0.0
+conda create -c conda-forge -c bioconda -n snakemake snakemake>=9.0
 conda activate snakemake
 ```
 
@@ -83,19 +85,21 @@ sample2,SRR12345679,lib2,GCF_000001735.4,,
 ```
 
 **Required columns:**
+
 - `BioSample`: Sample identifier
 - `Run`: SRA run accession (e.g., SRR12345678) or unique identifier for local files
 - `LibraryName`: Library name for read groups
 - `refGenome`: Reference genome accession or identifier
 
 **Optional columns:**
+
 - `fq1`, `fq2`: Paths to local FASTQ files (leave empty for SRA download)
 
 ### 2. Reference Contigs (`config/include_contigs.csv`)
 
 List the chromosomes/contigs to include in WHAM analysis:
 
-```
+```{text}
 Chr1
 Chr2
 Chr3
@@ -137,7 +141,7 @@ snakemake -n
 snakemake --cores 8 --use-conda
 
 # Run on cluster (SLURM example)
-snakemake --cores 100 --use-conda --cluster "sbatch -p partition -c {threads} --mem={resources.mem_mb}MB -t 24:00:00"
+snakemake --workflow-profile workflow-profile/SLURM/ #Under construction
 ```
 
 ### Output Files
@@ -148,7 +152,7 @@ The pipeline generates several key outputs:
 - **Merged per-sample calls**: `results/{refGenome}/SV/postprocess/raw_merge/{sample}.vcf`
 - **Processed calls**: `results/{refGenome}/SV/postprocess/processed/{sample}.processed.vcf`
 - **Final consensus**: `results/{refGenome}/SV/postprocess/processed/all_samples_final.vcf`
-- **Metadata**: `results/{refGenome}/SV/sv_metadata/metadata.tsv`
+- **SV Call Metadata**: `results/{refGenome}/SV/sv_metadata/metadata.tsv`
 - **BAM files**: `results/{refGenome}/bams/{sample}_final.bam`
 
 ### Benchmarking (Optional)
@@ -195,17 +199,17 @@ To enable benchmarking against truth sets:
 
 ## Citation
 
-If you use svArcher, please cite:
+If you use svArcher, please cite in addition to all the tools implemented:
 
-```
-svArcher: A Structural Variant Calling Extension module for snpArcher
-[Citation information to be added]
+```{text}
+svArcher - A Reproducible Structural Variant Calling and Benchmarking Platform from Short-Read Data
+[In Prep]
 ```
 
 ## License
 
-[License information to be added]
+[TBD]
 
 ## Support
 
-For questions and issues, please visit the [GitHub repository](https://github.com/ChabbyTMD/snpArcher).
+For questions and issues, please submit an issue on the repo.
