@@ -24,26 +24,7 @@ rerun-incomplete: True
 printshellcmds: True
 scheduler: greedy
 use-conda: True
-cluster-generic-status-cmd:
-  set -eu
-  jobid="$1"
-  if [[ "$jobid" == Submitted ]]
-  then
-    echo smk-simple-slurm: Invalid job ID: "$jobid" >&2
-    echo smk-simple-slurm: Did you remember to add the flag --parsable to your sbatch call? >&2
-    exit 1
-  fi
-  output=`scontrol -o show job "$jobid" | sed "s/^.*JobState\=\(\S*\).*$/\1/"`
-  if [[ $output =~ ^(COMPLETED).* ]]
-  then
-    echo success
-  elif [[ $output =~ ^(RUNNING|PENDING|COMPLETING|CONFIGURING|SUSPENDED).* ]]
-  then
-    echo running
-  else
-    echo failed
-  fi
-
+cluster-generic-status-cmd: bash workflow-profiles/cluster-generic-slurm/status_control.sh
 set-threads:
   get_fastq_pe: 8
   fastp: 8
