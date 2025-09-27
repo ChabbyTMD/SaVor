@@ -1,5 +1,6 @@
 use-conda: True
 conda-frontend: mamba
+local-cores: 16
 set-threads:
   get_fastq_pe: 8
   fastp: 8
