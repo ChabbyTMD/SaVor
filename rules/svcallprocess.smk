@@ -49,7 +49,7 @@ checkpoint sample_sv_call_merge:
 		# Create a file with the paths to the vcf files
 		# This is needed for survivor merge
 		ls {input.delly_vcf} {input.lumpy_vcf} {input.wham_vcf} > {params.sample_file}
-		SURVIVOR merge {params.sample_file} 500 1 1 1 0 50 {output.merged_vcf} 2> {log}
+		SURVIVOR merge {params.sample_file} 1000 1 1 1 0 50 {output.merged_vcf} 2> {log}
 		"""
 
 checkpoint filter_sv_calls:
@@ -100,7 +100,7 @@ rule all_sample_merge:
     shell:
         """
         # SURVIVOR merge takes the file with paths as the first argument
-        SURVIVOR merge {input.path_list} 500 1 1 1 0 50 {output.merged_vcf} 2> {log}
+        SURVIVOR merge {input.path_list} 1000 1 1 1 0 50 {output.merged_vcf} 2> {log}
         """
 rule alt_metadata_save:
     input:
