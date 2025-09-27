@@ -8,6 +8,8 @@ rule get_fastq_pe:
         "../envs/fastq2bam.yml"
     benchmark:
         "benchmarks/{refGenome}/getfastq/{sample}_{run}.txt"
+    log:
+        "logs/{refGenome}/getfastq/{sample}/{run}.txt"
     resources:
         tmpdir = get_big_temp
     shell:
