@@ -8,7 +8,7 @@ cluster-generic-submit-cmd:
     --ntasks=1
     --cpus-per-task={threads}
     --output=slurmlogs/{rule}/{rule}-{wildcards}-%j.out
-    --error=slurmlogs/{rule}/{rule}-{jobid}-%j.err \
+    --error=slurmlogs/{rule}/{rule}-{wildcards}-%j.err \
     --parsable
 
 # Snakemake options
