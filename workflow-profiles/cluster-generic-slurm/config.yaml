@@ -1,0 +1,52 @@
+use-conda: True
+executor: cluster-generic
+cluster-generic-submit-cmd:
+  mkdir -p slurmlogs/{rule} &&
+  sbatch
+    --job-name=smk-{rule}-{wildcards}
+    --nodes=1
+    --ntasks=1
+    --cpus-per-task={threads}
+    --output=slurmlogs/{rule}/{rule}-{wildcards}-%j.out
+    --error=slurmlogs/{rule}/{rule}-{jobid}-%j.err \
+    --parsable
+
+# Snakemake options
+restart-times: 3
+max-jobs-per-second: 10
+max-status-checks-per-second: 1
+latency-wait: 60
+jobs: 80
+local-cores: 4
+cores: 16
+keep-going: True
+rerun-incomplete: True
+printshellcmds: True
+scheduler: greedy
+use-conda: True
+cluster-generic-status-cmd:
+  set -eu
+  jobid="$1"
+  if [[ "$jobid" == Submitted ]]
+  then
+    echo smk-simple-slurm: Invalid job ID: "$jobid" >&2
+    echo smk-simple-slurm: Did you remember to add the flag --parsable to your sbatch call? >&2
+    exit 1
+  fi
+  output=`scontrol -o show job "$jobid" | sed "s/^.*JobState\=\(\S*\).*$/\1/"`
+  if [[ $output =~ ^(COMPLETED).* ]]
+  then
+    echo success
+  elif [[ $output =~ ^(RUNNING|PENDING|COMPLETING|CONFIGURING|SUSPENDED).* ]]
+  then
+    echo running
+  else
+    echo failed
+  fi
+
+set-threads:
+  get_fastq_pe: 8
+  fastp: 8
+  bwa_map: 16
+  dedup: 16
+  wham_call: 10
