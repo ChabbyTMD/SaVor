@@ -24,7 +24,7 @@ rule get_fastq_pe:
         then
             ffq --ftp {wildcards.run} | grep -Eo '"url": "[^"]*"' | grep -o '"[^"]*"$' | grep "fastq" | xargs curl --remote-name-all --output-dir {params.outdir}
         else
-            fasterq-dump {wildcards.run} -O {params.outdir} -e {threads} -t {resources.tmpdir} #TODO: make this dynamic based on user provided threads
+            fasterq-dump {wildcards.run} -O {params.outdir} -e {threads} -t {resources.tmpdir}
             pigz -p {threads} {params.outdir}{wildcards.run}*.fastq
         fi
         rm -rf {wildcards.run}
@@ -65,7 +65,7 @@ rule fastp:
         """
         fastp --in1 {input.r1} --in2 {input.r2} \
         --out1 {output.r1} --out2 {output.r2} \
-        --thread {threads} \ #TODO: make this dynamic based on user provided threads
+        --thread {threads} \
         --detect_adapter_for_pe \
         -j {output.summ} -h /dev/null \
         &>{log}
