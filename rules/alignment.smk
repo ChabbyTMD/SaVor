@@ -14,7 +14,7 @@ rule bwa_map:
     log:
         "logs/{refGenome}/bwa_mem/{sample}/{run}.txt"
     benchmark:
-        "benchmarks/{refGenome}/bwa_mem/{sample}_{run}.txt" # TODO: make this dynamic based on user provided threads
+        "benchmarks/{refGenome}/bwa_mem/{sample}_{run}.txt"
     shell:
         "bwa-mem2 mem -t {threads} -R {params.rg} {input.ref} {input.r1} {input.r2} 2> {log} | samtools sort -o {output.bam} - && samtools index {output.bam} {output.bai}"
 
@@ -46,7 +46,7 @@ rule dedup:
     benchmark:
         "benchmarks/{refGenome}/sambamba_dedup/{sample}.txt"
     shell:
-        "sambamba markdup -t {threads} {input.bam} {output.dedupBam} 2> {log}" #TODO: make this dynamic based on user provided threads
+        "sambamba markdup -t {threads} {input.bam} {output.dedupBam} 2> {log}"
 
 rule download_reference:
     """Download reference genome if not provided by user, or copy custom reference."""
