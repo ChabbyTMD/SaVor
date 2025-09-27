@@ -14,8 +14,7 @@ rule bwa_map:
     log:
         "logs/{refGenome}/bwa_mem/{sample}/{run}.txt"
     benchmark:
-        "benchmarks/{refGenome}/bwa_mem/{sample}_{run}.txt"
-    threads: 8 # TODO: make this dynamic based on user provided threads
+        "benchmarks/{refGenome}/bwa_mem/{sample}_{run}.txt" # TODO: make this dynamic based on user provided threads
     shell:
         "bwa-mem2 mem -t {threads} -R {params.rg} {input.ref} {input.r1} {input.r2} 2> {log} | samtools sort -o {output.bam} - && samtools index {output.bam} {output.bai}"
 
