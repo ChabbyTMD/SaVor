@@ -1,9 +1,9 @@
 use-conda: True
-conda-frontend: mamba
+# conda-frontend: mamba
 local-cores: 16
 set-threads:
   get_fastq_pe: 8
   fastp: 8
   bwa_map: 16
   dedup: 16
-  wham_call: 10
+  wham_call: 8
