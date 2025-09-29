@@ -137,11 +137,11 @@ conda activate snakemake
 # Dry run to check workflow
 snakemake -n
 
-# Run with 8 cores
-snakemake --cores 8 --use-conda
+# Run with at least 8 cores
+snakemake --cores <num_of_cores> --use-conda
 
 # Run on cluster (SLURM example)
-snakemake --workflow-profile workflow-profile/SLURM/ #Under construction
+snakemake --workflow-profile workflow-profile/cluster-generic-slurm/
 ```
 
 ### Output Files
@@ -166,25 +166,26 @@ To enable benchmarking against truth sets:
 ## Workflow Steps
 
 1. **Data Ingestion**:
+
    - Download FASTQ files from SRA (`get_fastq_pe`)
    - Optional read sorting (`sort_reads`)
    - Quality control with fastp (`fastp`)
-
 2. **Reference Preparation**:
+
    - Download reference genome if needed (`download_reference`)
    - Create BWA and samtools indices (`index_reference`)
-
 3. **Read Alignment**:
+
    - BWA-MEM2 alignment (`bwa_map`)
    - BAM merging if multiple runs per sample (`merge_bams`)
    - Duplicate marking with sambamba (`dedup`)
-
 4. **Structural Variant Calling**:
+
    - DELLY calling (`delly_call`, `delly_vcf`)
    - Lumpy calling (`discordant_extract`, `split_read_extract`, `lumpy_call`)
    - WHAM calling (`wham_call`)
-
 5. **Post-processing**:
+
    - VCF sorting (`sort_vcfs`)
    - Per-sample merging (`sample_sv_call_merge`)
    - Filtering (`filter_sv_calls`)
