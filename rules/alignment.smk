@@ -45,10 +45,15 @@ rule dedup:
         "logs/{refGenome}/sambamba_dedup/{sample}.txt"
     benchmark:
         "benchmarks/{refGenome}/sambamba_dedup/{sample}.txt"
+    # This rule should only run when the sample doesn't have user-provided BAMs
+    resources:
+        # This is a hack to make snakemake evaluate the conditional in the run directive
+        skip_if_user_bam=lambda wc: 1 if has_user_bams(wc.sample) else 0
     shell:
         "sambamba markdup -t {threads} {input.bam} {output.dedupBam} 2> {log}"
 
-# Add a rule to determine which workflow path to use (user BAMs or alignment workflow)
+# Define rule order to ensure the correct rule is chosen for generating final BAMs
+# When a sample has user-provided BAMs, link_user_bam will be chosen over dedup
 ruleorder: link_user_bam > dedup
 
 rule download_reference:
