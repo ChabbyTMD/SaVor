@@ -48,6 +48,9 @@ rule dedup:
     shell:
         "sambamba markdup -t {threads} {input.bam} {output.dedupBam} 2> {log}"
 
+# Add a rule to determine which workflow path to use (user BAMs or alignment workflow)
+ruleorder: link_user_bam > dedup
+
 rule download_reference:
     """Download reference genome if not provided by user, or copy custom reference."""
     output:
