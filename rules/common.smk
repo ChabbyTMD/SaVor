@@ -91,8 +91,52 @@ def get_custom_reference_path(refGenome):
                 return str(ref_path).strip()
     return None
 
+def has_user_bams(sample_id):
+    """Check if a sample has user-provided BAM and BAI files."""
+    if "bamPath" not in samples.columns or "baiPath" not in samples.columns:
+        return False
+    
+    sample_rows = samples.loc[samples["BioSample"] == sample_id]
+    if sample_rows.empty:
+        return False
+    
+    # Check if any valid BAM and BAI paths are provided
+    for _, row in sample_rows.iterrows():
+        bam_path = row.get("bamPath")
+        bai_path = row.get("baiPath")
+        if pd.notna(bam_path) and pd.notna(bai_path) and os.path.exists(bam_path) and os.path.exists(bai_path):
+            return True
+    return False
+
+def get_user_bams(sample_id):
+    """Get user-provided BAM and BAI files for a sample."""
+    out = {"bam": None, "bai": None}
+    if "bamPath" not in samples.columns or "baiPath" not in samples.columns:
+        return out
+    
+    sample_rows = samples.loc[samples["BioSample"] == sample_id]
+    if sample_rows.empty:
+        return out
+    
+    # Get the first valid BAM and BAI paths
+    for _, row in sample_rows.iterrows():
+        bam_path = row.get("bamPath")
+        bai_path = row.get("baiPath")
+        if pd.notna(bam_path) and pd.notna(bai_path) and os.path.exists(bam_path) and os.path.exists(bai_path):
+            out["bam"] = bam_path
+            out["bai"] = bai_path
+            return out
+    
+    return out
+
 def get_bams(wc):
-    """Get BAM files for SV calling - use final deduplicated BAMs if mark_duplicates is enabled."""
+    """Get BAM files for SV calling - use user-provided BAMs if available, 
+    otherwise use final deduplicated BAMs if mark_duplicates is enabled."""
+    # First check for user-provided BAM files
+    if has_user_bams(wc.sample):
+        return get_user_bams(wc.sample)
+    
+    # If no user BAMs, proceed with workflow-generated BAMs
     out = {"bam": None, "bai": None}
     if config.get("mark_duplicates", True):
         out["bam"] = "results/{refGenome}/bams/{sample}_final.bam"
@@ -227,4 +271,14 @@ def svArcher_output(wildcards):
     output.extend(expand("results/{refGenome}/SV/sv_metadata/metadata.tsv", refGenome=REFGENOME))
     if config.get("svBenchmark", False):
         output.extend(expand("results/{refGenome}/SV/benchmark/{svType}/{svType}_METRICS/summary.json", refGenome=REFGENOME, svType=["DEL", "INV", "DUP"]))
+    
+    # Ensure all samples have the required BAM files
+    # This will trigger either the alignment workflow or the link_user_bam rule
+    output.extend(expand("results/{refGenome}/bams/{sample}_final.bam", 
+                        refGenome=REFGENOME, 
+                        sample=samples["BioSample"].unique().tolist()))
+    output.extend(expand("results/{refGenome}/bams/{sample}_final.bam.bai", 
+                        refGenome=REFGENOME, 
+                        sample=samples["BioSample"].unique().tolist()))
+    
     return output
