@@ -92,7 +92,12 @@ def get_custom_reference_path(refGenome):
     return None
 
 def has_user_bams(sample_id):
-    """Check if a sample has user-provided BAM and BAI files."""
+    """Check if a sample has user-provided BAM and BAI paths specified.
+    
+    This function only checks if valid paths are specified in the sample sheet,
+    without verifying that the files actually exist on disk. The existence check
+    should be performed at the time of use to avoid TOCTOU race conditions.
+    """
     if "bamPath" not in samples.columns or "baiPath" not in samples.columns:
         return False
     
@@ -100,16 +105,22 @@ def has_user_bams(sample_id):
     if sample_rows.empty:
         return False
     
-    # Check if any valid BAM and BAI paths are provided
+    # Check if any valid BAM and BAI paths are provided (without existence check)
     for _, row in sample_rows.iterrows():
         bam_path = row.get("bamPath")
         bai_path = row.get("baiPath")
-        if pd.notna(bam_path) and pd.notna(bai_path) and os.path.exists(bam_path) and os.path.exists(bai_path):
+        if pd.notna(bam_path) and pd.notna(bai_path) and str(bam_path).strip() and str(bai_path).strip():
+            # Only check that paths are specified, not that files exist
             return True
     return False
 
 def get_user_bams(sample_id):
-    """Get user-provided BAM and BAI files for a sample."""
+    """Get user-provided BAM and BAI file paths for a sample.
+    
+    This function only retrieves the paths specified in the sample sheet,
+    without verifying that the files actually exist on disk. The existence check
+    should be performed at the time of use to avoid TOCTOU race conditions.
+    """
     out = {"bam": None, "bai": None}
     if "bamPath" not in samples.columns or "baiPath" not in samples.columns:
         return out
@@ -118,31 +129,30 @@ def get_user_bams(sample_id):
     if sample_rows.empty:
         return out
     
-    # Get the first valid BAM and BAI paths
+    # Get the first valid BAM and BAI paths (without existence check)
     for _, row in sample_rows.iterrows():
         bam_path = row.get("bamPath")
         bai_path = row.get("baiPath")
-        if pd.notna(bam_path) and pd.notna(bai_path) and os.path.exists(bam_path) and os.path.exists(bai_path):
-            out["bam"] = bam_path
-            out["bai"] = bai_path
+        if pd.notna(bam_path) and pd.notna(bai_path) and str(bam_path).strip() and str(bai_path).strip():
+            # Only check that paths are specified, not that files exist
+            out["bam"] = str(bam_path).strip()
+            out["bai"] = str(bai_path).strip()
             return out
     
     return out
 
 def get_bams(wc):
-    """Get BAM files for SV calling - use user-provided BAMs if available, 
-    otherwise use final deduplicated BAMs if mark_duplicates is enabled."""
-    # First check for user-provided BAM files
-    if has_user_bams(wc.sample):
-        return get_user_bams(wc.sample)
-    
-    # If no user BAMs, proceed with workflow-generated BAMs
+    """Get BAM files for SV calling - always return workflow paths
+    (either final.bam or intermediate bams based on mark_duplicates)"""
     out = {"bam": None, "bai": None}
     if config.get("mark_duplicates", True):
+        # Always use the workflow's final BAM path, which could be either
+        # user-provided (via link_user_bam) or workflow-generated (via dedup)
         out["bam"] = "results/{refGenome}/bams/{sample}_final.bam"
         out["bai"] = "results/{refGenome}/bams/{sample}_final.bam.bai"
         return out
     else:
+        # If mark_duplicates is disabled, use the raw input (pre or post merge)
         return dedup_input(wc)
 
 def dedup_input(wc):
