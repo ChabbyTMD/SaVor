@@ -3,6 +3,8 @@
 ##############################
 
 # path to the sample metadata CSV
+# To use user-provided BAM files, add bamPath and baiPath columns to this CSV
+# See config/samples_with_bam.csv.template for an example
 samples: "config/samples.csv" 
 
 # path to csv file with list of contigs to include (Required by wham sv caller)
@@ -19,6 +21,7 @@ use_custom_reference: true
 sort_reads: false
 
 # Enable/disable duplicate marking
+# When using user-provided BAM files, this setting is ignored
 mark_duplicates: true
 
 # Set a temporary directory for large files (optional)
