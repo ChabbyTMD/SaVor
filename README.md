@@ -20,6 +20,7 @@
 - **Consensus calling**: SURVIVOR-based merging requiring agreement from multiple callers
 - **Benchmarking support**: Optional comparison against truth sets using Truvari
 - **Conda environments**: All dependencies managed through conda/mamba
+- **Flexible input**: Support for FASTQ files (SRA or local) or user-provided BAM files
 
 ## Directory Structure
 
