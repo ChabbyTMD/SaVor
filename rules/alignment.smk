@@ -45,10 +45,6 @@ rule dedup:
         "logs/{refGenome}/sambamba_dedup/{sample}.txt"
     benchmark:
         "benchmarks/{refGenome}/sambamba_dedup/{sample}.txt"
-    # This rule should only run when the sample doesn't have user-provided BAMs
-    resources:
-        # This is a hack to make snakemake evaluate the conditional in the run directive
-        skip_if_user_bam=lambda wc: 1 if has_user_bams(wc.sample) else 0
     shell:
         "sambamba markdup -t {threads} {input.bam} {output.dedupBam} 2> {log}"
 
