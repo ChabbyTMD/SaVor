@@ -24,5 +24,5 @@ rule delly_vcf:
         "logs/{refGenome}/SV/delly/{sample}_vcf.log"
     shell:
         """
-        bcftools view {input} -O v -o {output.delly_vcf} 2> {log}
+        bcftools view {input.delly_bcf} -O v -o {output.delly_vcf} 2> {log}
         """
