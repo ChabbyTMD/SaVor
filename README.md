@@ -90,6 +90,9 @@ snakemake --cores <num_of_cores> --use-conda
 snakemake --workflow-profile workflow-profile/cluster-generic-slurm/
 ```
 
+## Workflow Tutorial
+Consult the documentation directory for an in-depth [tutorial](docs/README.md).
+
 ### Output Files
 
 The pipeline generates several key outputs:
