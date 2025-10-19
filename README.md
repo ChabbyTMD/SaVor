@@ -72,60 +72,6 @@ conda create -c conda-forge -c bioconda -n snakemake snakemake>=9.0
 conda activate snakemake
 ```
 
-## Configuration
-
-### 1. Sample Metadata (`config/samples.csv`)
-
-Create a CSV file with your sample information:
-
-```csv
-BioSample,Run,LibraryName,refGenome,fq1,fq2
-sample1,SRR12345678,lib1,GCF_000001735.4,,
-sample2,SRR12345679,lib2,GCF_000001735.4,,
-```
-
-**Required columns:**
-
-- `BioSample`: Sample identifier
-- `Run`: SRA run accession (e.g., SRR12345678) or unique identifier for local files
-- `LibraryName`: Library name for read groups
-- `refGenome`: Reference genome accession or identifier
-
-**Optional columns:**
-
-- `fq1`, `fq2`: Paths to local FASTQ files (leave empty for SRA download)
-
-### 2. Reference Contigs (`config/include_contigs.csv`)
-
-List the chromosomes/contigs to include in WHAM analysis:
-
-```{text}
-Chr1
-Chr2
-Chr3
-Chr4
-Chr5
-```
-
-### 3. Main Configuration (`config/config.yaml`)
-
-```yaml
-# Required settings
-samples: "config/samples.csv"
-include_contigs: "config/include_contigs.csv"
-
-# Optional settings
-sort_reads: false
-mark_duplicates: true
-remote_reads: false
-svBenchmark: false
-
-# Benchmarking (if enabled)
-deletions: "benchmark_truth/deletions.vcf.gz"
-duplications: "benchmark_truth/duplications.vcf.gz"
-inversions: "benchmark_truth/inversions.vcf.gz"
-```
-
 ## Usage
 
 ### Basic Run
