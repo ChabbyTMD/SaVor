@@ -44,7 +44,7 @@ checkpoint sample_sv_call_merge:
 		"logs/{refGenome}/SV/postprocess/{sample}.log"
 	params:
 		sample_file = "results/{refGenome}/SV/postprocess/raw_merge/{sample}.txt",
-		merge_param=lambda wc: config.get("sv_merge", 1),
+		merge_param=lambda wc: min(max(int(config.get("sv_merge", 1)), 1), 3),
 	shell:
 		"""
 		# Create a file with the paths to the vcf files
