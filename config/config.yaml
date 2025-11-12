@@ -30,9 +30,9 @@ remote_reads: false
 
 # SV Call Merge Options.
 # Report callers supported by at least N callers, where N can be 1, 2, or 3.
-# N=1 Report calls supported by at least 1 caller (union of all callers) - Default
+# N=1 Report calls supported by at least 1 caller (union of all callers)
 # N=2 Report calls supported by at least 2 callers
-# N=3 Report calls supported by all 3 callers (intersection of all callers)
+# N=3 Report calls supported by all 3 callers (intersection of all callers) - Default
 sv_merge: 3
 
 ##############################
