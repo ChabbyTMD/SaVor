@@ -1,10 +1,10 @@
-# svArcher Standalone Pipeline
+# SaVor: A Structural Variant Calling and Benchmarking Workflow for Short-Read Sequence Data.
 
 <div align="center">
-<img src="img/svArcher_logo-1.png" alt="svArcher Logo" width="150" height="190">
+<img src="img/savor_logo.png" alt="SaVor Logo" width="150" height="190">
 </div>
 
-*svArcher* is a standalone reproducible Snakemake pipeline designed to call structural variants (SVs) from short read genomic sequencing data. The pipeline performs:
+*Savor* is a standalone reproducible Snakemake pipeline designed to call structural variants (SVs) from short read genomic sequencing data. The pipeline performs:
 
 1. **Data ingestion**: FASTQ download/processing and quality control
 2. **Read alignment**: BWA-MEM2 alignment with duplicate marking
@@ -25,7 +25,7 @@
 ## Directory Structure
 
 ```{text}
-svArcher_Standalone/
+SaVor_Standalone/
 ├── Snakefile                 # Main workflow file
 ├── config/
 │   ├── config.yaml          # Configuration file
@@ -150,10 +150,10 @@ To enable benchmarking against truth sets:
 
 ## Citation
 
-If you use svArcher, please cite in addition to all the tools implemented:
+If you use SaVor, please cite in addition to all the tools implemented:
 
 ```{text}
-svArcher - A Reproducible Structural Variant Calling and Benchmarking Platform from Short-Read Data
+SaVor - A Reproducible Structural Variant Calling and Benchmarking Platform from Short-Read Data
 [In Prep]
 ```
 
