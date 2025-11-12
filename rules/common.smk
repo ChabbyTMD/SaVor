@@ -212,6 +212,20 @@ def get_sv_caller_outputs(wildcards):
         sample=samples["BioSample"].unique().tolist()
     )
 
+def merge_config(wildcards):
+    """
+    Pass merge parameter to SURVIVOR merge from config file.
+    """
+    try:
+        if config.get("sv_merge")>=1 and config.get("sv_merge")<=3:
+            return config.get("sv_merge")
+        else:
+            raise WorkflowError(f"Invalid sv_merge value: {config.get('sv_merge')}. Must be 1, 2, or 3.")
+    except TypeError:
+        sv_merge_value = config.get('sv_merge')
+        logger.error(f"Invalid sv_merge value provided: '{sv_merge_value}'. Must be an integer 1, 2, or 3, not {type(sv_merge_value).__name__} type")
+        raise
+
 def svArcher_output(wildcards):
     """Define all final outputs for svArcher pipeline."""
     output = []
