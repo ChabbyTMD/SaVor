@@ -216,15 +216,17 @@ def merge_config(wildcards):
     """
     Pass merge parameter to SURVIVOR merge from config file.
     """
-    try:
-        if config.get("sv_merge")>=1 and config.get("sv_merge")<=3:
-            return config.get("sv_merge")
-        else:
-            raise WorkflowError(f"Invalid sv_merge value: {config.get('sv_merge')}. Must be 1, 2, or 3.")
-    except TypeError:
-        sv_merge_value = config.get('sv_merge')
-        logger.error(f"Invalid sv_merge value provided: '{sv_merge_value}'. Must be an integer 1, 2, or 3, not {type(sv_merge_value).__name__} type")
-        raise
+    sv_merge = config.get("sv_merge")
+
+    if sv_merge is None:
+        raise WorkflowError("SV Merge parameter not found in config file. Must be set to 1, 2, or 3.")
+    if not isinstance(sv_merge, int):
+        logger.error(f"Invalid sv_merge value provided: '{sv_merge}'. Must be an integer 1, 2, or 3, not {type(sv_merge).__name__} type")
+        raise WorkflowError(f"sv_merge must be an integer, got {type(sv_merge).__name__}")
+    if not (1 <= sv_merge <= 3):
+        raise WorkflowError(f"Invalid sv_merge value: {sv_merge}. Must be 1, 2, or 3.")
+
+    return sv_merge
 
 def svArcher_output(wildcards):
     """Define all final outputs for svArcher pipeline."""
