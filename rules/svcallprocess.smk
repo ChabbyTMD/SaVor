@@ -44,13 +44,13 @@ checkpoint sample_sv_call_merge:
 		"logs/{refGenome}/SV/postprocess/{sample}.log"
 	params:
 		sample_file = "results/{refGenome}/SV/postprocess/raw_merge/{sample}.txt",
-		merge_param=lambda wc: min(max(int(config.get("sv_merge", 1)), 1), 3),
+		merge_config = merge_config
 	shell:
 		"""
 		# Create a file with the paths to the vcf files
 		# This is needed for survivor merge
 		ls {input.delly_vcf} {input.lumpy_vcf} {input.wham_vcf} > {params.sample_file}
-		SURVIVOR merge {params.sample_file} 1000 {params.merge_param} 1 1 0 50 {output.merged_vcf} 2> {log}
+		SURVIVOR merge {params.sample_file} 1000 {params.merge_config} 1 1 0 50 {output.merged_vcf} 2> {log}
 		"""
 
 checkpoint filter_sv_calls:
