@@ -130,7 +130,7 @@ def get_user_bams(sample_id):
         return out
     
     # Get the first valid BAM and BAI paths (without existence check)
-     for _, row in sample_rows.iterrows():
+    for _, row in sample_rows.iterrows():
         bam_path = row.get("bamPath")
         bai_path = row.get("baiPath")
         if pd.notna(bam_path) and pd.notna(bai_path) and str(bam_path).strip() and str(bai_path).strip():
