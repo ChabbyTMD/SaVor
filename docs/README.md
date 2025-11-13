@@ -1,4 +1,4 @@
-# SaVor Tutorial
+# SaVor User Guide
 
 # 1. Prerequisites
 
@@ -47,10 +47,9 @@ git clone https://github.com/ChabbyTMD/svArcher_Standalone.git
 Once the SaVor repository has been cloned onto your machine. You may set up your analysis in one of two ways depending on the location of your reads.
 
 > [!NOTE]
-> SaVor functions with both local sequence reads or sequence reads available from the NCBI Sequence Read Archive (NCBI).
-
-> [!NOTE]
-> SaVor only runs with paired-end sequence data. Please check all your sequence reads prior to running your workflow.
+> 1. SaVor functions with both local sequence reads or sequence reads available from the NCBI Sequence Read Archive (NCBI).
+> 
+> 2. SaVor only runs with paired-end sequence data. Please check all your sequence reads prior to running your workflow.
 <br>
 
 > [!TIP]
@@ -99,13 +98,16 @@ In the sample config.yaml you’ll find a number of parameters you’ll need to 
 
 # 3. Running SaVor
 
-Use the following guide to determine the columns you need to include in your sample.csv metadata file.
+Use the following as general guide to determine the columns you need to include in your sample.csv metadata file to set up your structural variant calling run.
+
+> [!NOTE]
+> For a quick tutorial with Arabidopsis data from NCBI follow this [link](savor_tutorial.md).
 
 ## 3.1. Choosing your sample sheet layout
 
 ### 3.1.1. Single lane samples from NCBI SRA using a reference genome from NCBI refSeq
 
-```bash
+```csv
 Run,BioSample,LibraryName,refGenome
 SRRXXXXXXX,SAMNXXXXXXXX,SAMNXXXXXXXX,GCF_XXXXXXXXX.X
 ```
@@ -114,7 +116,7 @@ SRRXXXXXXX,SAMNXXXXXXXX,SAMNXXXXXXXX,GCF_XXXXXXXXX.X
 
 ### 3.1.2. Single lane local reads and NCBI refSeq reference genome
 
-```bash
+```csv
 Run,BioSample,LibraryName,refGenome,fq1,fq1
 sample1,sample1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/sample1_lane1_1.fastq.gz,/path/to/sample1_lane1_2.fastq.gz
 ```
@@ -123,7 +125,7 @@ sample1,sample1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/sample1_lane1_1.fastq.gz,/p
 
 ### 3.1.3. Single lane local reads and a custom reference
 
-```bash
+```csv
 Run,BioSample,LibraryName,refGenome,refPath,fq1,fq1
 sample1,sample1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.fna,/path/to/sample1_lane1_1.fastq.gz,/path/to/sample1_lane1_2.fastq.gz
 ```
@@ -132,7 +134,7 @@ sample1,sample1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.f
 
 ### 3.1.4. Mutli lane local reads and NCBI refSeq reference genome
 
-```bash
+```csv
 Run,BioSample,LibraryName,refGenome,fq1,fq1
 sample1,1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/sample1_lane1_1.fastq.gz,/path/to/sample1_lane1_2.fastq.gz
 sample1,2,lib_sample1,GCF_XXXXXXXXX.X,/path/to/sample1_lane2_1.fastq.gz,/path/to/sample1_lane2_2.fastq.gz
@@ -144,7 +146,7 @@ sample2,2,lib_sample2,GCF_XXXXXXXXX.X,/path/to/sample2_lane2_1.fastq.gz,/path/to
 
 ### 3.1.5. Mutli lane local reads and a custom reference
 
-```bash
+```csv
 Run,BioSample,LibraryName,refGenome,refPath,fq1,fq1
 sample1,1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.fna,/path/to/sample1_lane1_1.fastq.gz,/path/to/sample1_lane1_2.fastq.gz
 sample1,2,lib_sample1,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.fna,/path/to/sample1_lane2_1.fastq.gz,/path/to/sample1_lane2_2.fastq.gz
@@ -153,6 +155,17 @@ sample2,2,lib_sample2,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.fna,/pa
 ```
 
 `use_custom_reference`: True
+
+### 3.1.6 Single lane with custom reference and user provided BAM files
+
+```csv
+Run,BioSample,LibraryName,refGenome,refPath,bamPath,baiPath
+sample1,1,lib_sample1,GCF_XXXXXXXXX.X,REF_NAME.fna,/path/to/your/sample1.bam,/path/to/your/sample1.bam.bai
+sample2,1,lib_sample2,GCF_XXXXXXXXX.X,REF_NAME.fna,/path/to/your/sample2.bam,/path/to/your/sample2.bam.bai
+```
+
+For further details on executing the workflow from BAM files refer to the guide [here](user_provided_bams.md).
+
 
 ## 3.2. Executing SaVor
 
