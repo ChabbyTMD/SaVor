@@ -91,14 +91,68 @@ def get_custom_reference_path(refGenome):
                 return str(ref_path).strip()
     return None
 
+def has_user_bams(sample_id):
+    """Check if a sample has user-provided BAM and BAI paths specified.
+    
+    This function only checks if valid paths are specified in the sample sheet,
+    without verifying that the files actually exist on disk. The existence check
+    should be performed at the time of use to avoid TOCTOU race conditions.
+    """
+    if "bamPath" not in samples.columns or "baiPath" not in samples.columns:
+        return False
+    
+    sample_rows = samples.loc[samples["BioSample"] == sample_id]
+    if sample_rows.empty:
+        return False
+    
+    # Check if any valid BAM and BAI paths are provided (without existence check)
+    for _, row in sample_rows.iterrows():
+        bam_path = row.get("bamPath")
+        bai_path = row.get("baiPath")
+        if pd.notna(bam_path) and pd.notna(bai_path) and str(bam_path).strip() and str(bai_path).strip():
+            # Only check that paths are specified, not that files exist
+            return True
+    return False
+
+def get_user_bams(sample_id):
+    """Get user-provided BAM and BAI file paths for a sample.
+    
+    This function only retrieves the paths specified in the sample sheet,
+    without verifying that the files actually exist on disk. The existence check
+    should be performed at the time of use to avoid TOCTOU race conditions.
+    """
+    out = {"bam": None, "bai": None}
+    if "bamPath" not in samples.columns or "baiPath" not in samples.columns:
+        return out
+    
+    sample_rows = samples.loc[samples["BioSample"] == sample_id]
+    if sample_rows.empty:
+        return out
+    
+    # Get the first valid BAM and BAI paths (without existence check)
+    for _, row in sample_rows.iterrows():
+        bam_path = row.get("bamPath")
+        bai_path = row.get("baiPath")
+        if pd.notna(bam_path) and pd.notna(bai_path) and str(bam_path).strip() and str(bai_path).strip():
+            # Only check that paths are specified, not that files exist
+            out["bam"] = str(bam_path).strip()
+            out["bai"] = str(bai_path).strip()
+            return out
+    
+    return out
+
 def get_bams(wc):
-    """Get BAM files for SV calling - use final deduplicated BAMs if mark_duplicates is enabled."""
+    """Get BAM files for SV calling - always return workflow paths
+    (either final.bam or intermediate bams based on mark_duplicates)"""
     out = {"bam": None, "bai": None}
     if config.get("mark_duplicates", True):
+        # Always use the workflow's final BAM path, which could be either
+        # user-provided (via link_user_bam) or workflow-generated (via dedup)
         out["bam"] = "results/{refGenome}/bams/{sample}_final.bam"
         out["bai"] = "results/{refGenome}/bams/{sample}_final.bam.bai"
         return out
     else:
+        # If mark_duplicates is disabled, use the raw input (pre or post merge)
         return dedup_input(wc)
 
 def dedup_input(wc):
@@ -243,4 +297,14 @@ def svArcher_output(wildcards):
     output.extend(expand("results/{refGenome}/SV/sv_metadata/metadata.tsv", refGenome=REFGENOME))
     if config.get("svBenchmark", False):
         output.extend(expand("results/{refGenome}/SV/benchmark/{svType}/{svType}_METRICS/summary.json", refGenome=REFGENOME, svType=["DEL", "INV", "DUP"]))
+    
+    # Ensure all samples have the required BAM files
+    # This will trigger either the alignment workflow or the link_user_bam rule
+    output.extend(expand("results/{refGenome}/bams/{sample}_final.bam", 
+                        refGenome=REFGENOME, 
+                        sample=samples["BioSample"].unique().tolist()))
+    output.extend(expand("results/{refGenome}/bams/{sample}_final.bam.bai", 
+                        refGenome=REFGENOME, 
+                        sample=samples["BioSample"].unique().tolist()))
+    
     return output

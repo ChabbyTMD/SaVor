@@ -1,4 +1,5 @@
 include: "rules/common.smk"
+include: "rules/user_bams.smk"
 include: "rules/fastq_ingestion.smk"
 include: "rules/alignment.smk"
 include: "rules/lumpy.smk"

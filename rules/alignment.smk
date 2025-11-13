@@ -48,6 +48,10 @@ rule dedup:
     shell:
         "sambamba markdup -t {threads} {input.bam} {output.dedupBam} 2> {log}"
 
+# Define rule order to ensure the correct rule is chosen for generating final BAMs
+# When a sample has user-provided BAMs, link_user_bam will be chosen over dedup
+ruleorder: link_user_bam > dedup
+
 rule download_reference:
     """Download reference genome if not provided by user, or copy custom reference."""
     output:
