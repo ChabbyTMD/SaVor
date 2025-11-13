@@ -57,7 +57,3 @@ rule link_user_bam:
                 log_file.write(error_message + "\n")
                 print(error_message, file=sys.stderr)
                 raise WorkflowError(error_message)
-
-# This function was unused and has been removed.
-# The workflow now correctly uses rule priorities to determine whether to run
-# the link_user_bam rule or the dedup rule to generate the final BAM files.
