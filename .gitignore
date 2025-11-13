@@ -4,3 +4,5 @@ REFERENCE/
 benchmarks/
 test_workflow.sh
 .DS_Store
+bams/
+logs/
