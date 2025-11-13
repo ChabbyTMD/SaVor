@@ -2,7 +2,7 @@
 
 This is a quick tutorial we shall run SaVor to generate a union set of structural variants from a small set of Arabidopsis whole genome samples from NCBI.
 
-For brevity, we shall use BAM files, their associated indices of 4 *Arabidopsis thaliana* and the TAIR10 reference sequence contained in the [.test](https://drive.google.com/drive/folders/1ZZhS3nRH0XJbpVIZpgbx_NQjUkCvnI4U?usp=sharing) directory.
+For brevity, we shall use BAM files, their associated indices of 4 *Arabidopsis thaliana* and the TAIR10 reference sequence contained in the SaVor tutorial [Google Drive](https://drive.google.com/drive/folders/1ZZhS3nRH0XJbpVIZpgbx_NQjUkCvnI4U?usp=sharing) directory.
 
 This tutorial assumes you have;
 1. Set up and configured your snakemake mamba/conda environment and verified snakemake is installed and functional. Instructions for which are in the user guide [here](README.md)
