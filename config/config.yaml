@@ -5,7 +5,7 @@
 # path to the sample metadata CSV
 # To use user-provided BAM files, add bamPath and baiPath columns to this CSV
 # See config/samples_with_bam.csv.template for an example
-samples: "config/samples.csv" 
+samples: "config/bam_samples.csv" 
 
 # path to csv file with list of contigs to include (Required by wham sv caller)
 include_contigs: "config/include_contigs.csv"
