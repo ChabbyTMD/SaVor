@@ -49,6 +49,9 @@ Alternatively, you can easily determine the contig IDs from the reference file i
 grep "^>" ../REFERENCE/TAIR10_REF.fna > include_contigs.csv
 ```
 
+3. `sv_merge` - Change the value to `1` to generate a union set of SVs of the 4 samples.
+
+
 ## Step 3: Perform a Dry Run
 
 Change out of the `config` directory and into the SaVor root directory. Next, activate the snakemake conda/mamba environment unless its already active. Run the following Snakemake command to generate a list of jobs SaVor will execute. This should execute in a couple of seconds. If you encounter any errors, ensure you are in the repository root directory and verify whether you have all necessary configuration and data files present. Refer to the [user guide](README.md) if needed.
