@@ -32,7 +32,7 @@ Change into the `config` directory and edit the following options in the `config
 >```
 
 
-2. `include_contigs:` - Edit this path to point to the file `include_ctonigs.csv` containing the contig/chromosome IDs of the TAIR10 Reference.
+2. `include_contigs:` - Edit this path to point to the file `include_contigs.csv` containing the contig/chromosome IDs of the TAIR10 Reference.
 
 While in the `config` directory, create an empty file with all the contig IDs of your reference genome. Below are the contig IDs for the TAIR10 reference you downloaded earlier.
 
