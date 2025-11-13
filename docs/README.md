@@ -215,6 +215,10 @@ snakemake -p --workflow-profile workflow-profiles/cluster-generic-slurm
 
 If the workflow is killed or interrupted, append the `--rerun-incomplete` flag to the snakemake command. This allows regeneration of output files for rules that were in progress during the interruption.
 
+```bash
+snakemake -p --cores all --workflow-profile workflow-profiles/default --rerun-incomplete
+```
+
 If the user had to manually interupt the workflow, the following command must first be executed before restarting the SaVor:
 
 ```bash
