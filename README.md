@@ -1,7 +1,7 @@
 # SaVor: A Structural Variant Calling and Benchmarking Workflow for Short-Read Sequence Data.
 
 <div align="center">
-<img src="img/savor_logo.png" alt="SaVor Logo" width="150" height="190">
+<img src="img/savor_logo.png" alt="SaVor Logo" width="350" height="350">
 </div>
 
 *Savor* is a standalone reproducible Snakemake pipeline designed to call structural variants (SVs) from short read genomic sequencing data. The pipeline performs:
@@ -91,9 +91,9 @@ snakemake --cores <num_of_cores> --use-conda
 snakemake --workflow-profile workflow-profile/cluster-generic-slurm/
 ```
 
-## Workflow Tutorial
-Consult the documentation directory for an in-depth [tutorial](docs/README.md).
+### User Guide
 
+For detailed guidance on workflow setup, please consult the [user guide](docs/README.md).
 ### Output Files
 
 The pipeline generates several key outputs:
@@ -147,6 +147,9 @@ To enable benchmarking against truth sets:
 - **Memory**: 8-16GB per sample for alignment, 4-8GB for SV calling
 - **Storage**: ~10-50GB per sample depending on coverage
 - **Time**: 2-8 hours per sample depending on coverage and resources
+
+## Workflow Tutorial
+Consult the documentation directory for an in-depth [tutorial](docs/savor_tutorial.md).
 
 ## Citation
 
