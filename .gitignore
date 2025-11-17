@@ -7,3 +7,4 @@ test_workflow.sh
 bams/
 logs/
 .venv/
+._build/

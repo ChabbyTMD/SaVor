@@ -22,9 +22,9 @@ project:
   github: https://github.com/ChabbyTMD/svArcher_Standalone
   # To autogenerate a Table of Contents, run "jupyter book init --write-toc"
   toc:
-  - file: README.md
-  - file: savor_tutorial.md
-  - file: user_provided_bams.md
+  - file: docs/README.md
+  - file: docs/savor_tutorial.md
+  - file: docs/user_provided_bams.md
 site:
   template: book-theme
   # options:
