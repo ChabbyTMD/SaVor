@@ -7,5 +7,3 @@ test_workflow.sh
 bams/
 logs/
 .venv/
-# MyST build outputs
-docs/_build
