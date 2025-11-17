@@ -1,5 +1,10 @@
 # SaVor User Guide
 
+```{image} ../img/savor_logo.png
+:width: 200px
+:align: center
+```
+
 # 1. Prerequisites
 
 ## 1.1 Conda/Mamba
