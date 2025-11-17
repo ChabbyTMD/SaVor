@@ -6,3 +6,6 @@ test_workflow.sh
 .DS_Store
 bams/
 logs/
+.venv/
+# MyST build outputs
+docs/_build
