@@ -62,9 +62,12 @@ snakemake --cores 1 -np --workflow-profile workflow-profiles/default/
 
 If your workflow is configured correctly, you should see the following message print out.
 
-<div align="center">
-<img src="../img/savor_dry_run.png" alt="SaVor Logo" width="3440" height="720">
-</div>
+
+```{image} ../img/savor_dry_run.png
+:width: 1200
+:height: 400
+:align: center
+```
 
 ## Step 4: Perform a Wet Run
 
