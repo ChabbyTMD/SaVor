@@ -1,0 +1,32 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: b24129a2-152c-40ab-b4f2-330081a24236
+  title: SaVor
+  description: A Structural Variant Calling and Benchmarking Workflow for Short-Read Sequence Data.
+  keywords: 
+    - structural variant calling
+    - benchmarking
+    - Next Generation Sequencing
+  authors: 
+    - name: Trevor Mugoya
+      orcid: 0009-0007-1359-8733
+      affiliation: 
+        - id: aff1
+          name: Department of Biology, San Diego State University, San Diego, California, USA
+    - name: Arun Sethuraman
+      orcid: 0000-0002-8201-8292
+      affiliation: 
+        - id: aff1
+          name: Department of Biology, San Diego State University, San Diego, California, USA
+  github: https://github.com/ChabbyTMD/svArcher_Standalone
+  # To autogenerate a Table of Contents, run "jupyter book init --write-toc"
+  toc:
+  - file: README.md
+  - file: savor_tutorial.md
+  - file: user_provided_bams.md
+site:
+  template: book-theme
+  # options:
+  #   favicon: favicon.ico
+  #   logo: site_logo.png
