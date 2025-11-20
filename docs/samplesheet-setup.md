@@ -19,7 +19,7 @@ SRRXXXXXXX,SAMNXXXXXXXX,SAMNXXXXXXXX,GCF_XXXXXXXXX.X
 ### 3.1.2. Single lane local reads and NCBI refSeq reference genome
 
 ```csv
-Run,BioSample,LibraryName,refGenome,fq1,fq1
+Run,BioSample,LibraryName,refGenome,fq1,fq2
 sample1,sample1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/sample1_lane1_1.fastq.gz,/path/to/sample1_lane1_2.fastq.gz
 ```
 
@@ -28,16 +28,16 @@ sample1,sample1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/sample1_lane1_1.fastq.gz,/p
 ### 3.1.3. Single lane local reads and a custom reference
 
 ```csv
-Run,BioSample,LibraryName,refGenome,refPath,fq1,fq1
+Run,BioSample,LibraryName,refGenome,refPath,fq1,fq2
 sample1,sample1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.fna,/path/to/sample1_lane1_1.fastq.gz,/path/to/sample1_lane1_2.fastq.gz
 ```
 
 `use_custom_reference`: True
 
-### 3.1.4. Mutli lane local reads and NCBI refSeq reference genome
+### 3.1.4. Multi lane local reads and NCBI refSeq reference genome
 
 ```csv
-Run,BioSample,LibraryName,refGenome,fq1,fq1
+Run,BioSample,LibraryName,refGenome,fq1,fq2
 sample1,1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/sample1_lane1_1.fastq.gz,/path/to/sample1_lane1_2.fastq.gz
 sample1,2,lib_sample1,GCF_XXXXXXXXX.X,/path/to/sample1_lane2_1.fastq.gz,/path/to/sample1_lane2_2.fastq.gz
 sample2,1,lib_sample2,GCF_XXXXXXXXX.X,/path/to/sample2_lane1_1.fastq.gz,/path/to/sample2_lane1_2.fastq.gz
@@ -46,10 +46,10 @@ sample2,2,lib_sample2,GCF_XXXXXXXXX.X,/path/to/sample2_lane2_1.fastq.gz,/path/to
 
 `use_custom_reference`: False
 
-### 3.1.5. Mutli lane local reads and a custom reference
+### 3.1.5. Multi lane local reads and a custom reference
 
 ```csv
-Run,BioSample,LibraryName,refGenome,refPath,fq1,fq1
+Run,BioSample,LibraryName,refGenome,refPath,fq1,fq2
 sample1,1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.fna,/path/to/sample1_lane1_1.fastq.gz,/path/to/sample1_lane1_2.fastq.gz
 sample1,2,lib_sample1,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.fna,/path/to/sample1_lane2_1.fastq.gz,/path/to/sample1_lane2_2.fastq.gz
 sample2,1,lib_sample2,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.fna,/path/to/sample2_lane1_1.fastq.gz,/path/to/sample2_lane1_2.fastq.gz
@@ -58,7 +58,7 @@ sample2,2,lib_sample2,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.fna,/pa
 
 `use_custom_reference`: True
 
-### 3.1.6 Single lane with custom reference and user provided BAM files
+### 3.1.6. Single lane with custom reference and user provided BAM files
 
 ```csv
 Run,BioSample,LibraryName,refGenome,refPath,bamPath,baiPath

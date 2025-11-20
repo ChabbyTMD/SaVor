@@ -17,7 +17,7 @@ mamba --version
 
 ### 1.1.1 Snakemake Conda/Mamba environment
 
-Once your conda/mamba environment is working, you shall create a new conda/mamba environment and install snakemake with the following command.
+Once your conda/mamba environment is working, you should create a new conda/mamba environment and install snakemake with the following command.
 
 > [!NOTE]
 > For the rest of this tutorial, we'll use mamba commands. However, conda commands work the same way—simply substitute "conda" for "mamba."

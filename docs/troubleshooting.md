@@ -9,7 +9,7 @@ If the workflow is killed or interrupted, append the `--rerun-incomplete` flag t
 snakemake -p --cores all --workflow-profile workflow-profiles/default --rerun-incomplete
 ```
 
-If you had to manually interupt the workflow or it was unexpectedly killed, the following command must first be executed before restarting the SaVor:
+If you had to manually interrupt the workflow or it was unexpectedly killed, the following command must first be executed before restarting SaVor:
 
 ```bash
 snakemake -np --cores all --unlock
