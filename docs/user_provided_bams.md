@@ -1,6 +1,6 @@
 # User-Provided BAM Files
 
-The workflow now supports using your own BAM files instead of generating them from FASTQ files. To use this feature:
+SaVor supports using your own BAM files instead of generating them from FASTQ files. To use this feature:
 
 1. Add two new columns to your sample sheet (`samples.csv`):
    - `bamPath`: Full path to your BAM file
