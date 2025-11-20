@@ -1,6 +1,6 @@
 # Savor Tutorial
 
-This is a quick tutorial we shall run SaVor to generate a union set of structural variants from a small set of Arabidopsis whole genome samples from NCBI.
+In this quick tutorial, we shall run SaVor to generate a union set of structural variants from a small set of Arabidopsis whole genome samples from NCBI.
 
 For brevity, we shall use BAM files, their associated indices of 4 *Arabidopsis thaliana* and the TAIR10 reference sequence contained in the SaVor tutorial [Google Drive](https://drive.google.com/drive/folders/1ZZhS3nRH0XJbpVIZpgbx_NQjUkCvnI4U?usp=sharing) directory.
 
