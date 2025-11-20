@@ -16,7 +16,7 @@ Once the SaVor repository has been cloned onto your machine. You may set up your
 <br>
 
 > [!TIP]
-> Check the fastq report and pay special attention to the Sequence length distribution section. The length of your R1 and R2 files match.
+> Check the fastq report and pay special attention to the Sequence length distribution section. Ensure the read lengths of your R1 and R2 `.fastq` files match.
 <br>
 
 Detail all sequence reads you intend to analyze in the `.csv` sample sheet located in the `config/` directory, including the appropriate metadata. Refer to the next section for a description of sample sheet columns.

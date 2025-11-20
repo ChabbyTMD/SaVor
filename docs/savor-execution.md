@@ -1,11 +1,11 @@
 
 # 4. Executing SaVor
 
-After setting up your sample sheet and workflow configuration in the `config.yaml` file, its a good idea to perform a dry run to confirm whether you’ve set everything up correctly.
+After setting up your sample sheet and workflow configuration in the `config.yaml` file, it's a good idea to perform a dry run to confirm whether you've set everything up correctly.
 
 ### 4.1. Local Execution
 
-While in the workflow root directory with the snakmake mamba environment activated, perform a dry run with the following command:
+While in the workflow root directory with the snakemake mamba environment activated, perform a dry run with the following command:
 
 ```bash
 snakemake -np --cores 1 --workflow-profile workflow-profiles/default

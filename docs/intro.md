@@ -5,14 +5,14 @@
 :align: center
 ```
 
-Structural variant calling from short-read sequence data is a complex task often requiring multiple tools and various file types. With SaVor, we have streamlined the process of predicting structural variants from whole-genome resequencing projects by designing a flexible workflow that can utlize NCBI SRA sequence data or your local Illumina sequence reads from one or multiple lanes. In case you have on hand BAM files that you may have generated as part of a SNP analysis project, those can be used by SaVor to save on computational time.
+Structural variant calling from short-read sequence data is a complex task often requiring multiple tools and various file types. With SaVor, we have streamlined the process of predicting structural variants from whole-genome resequencing projects by designing a flexible workflow that can utilize NCBI SRA sequence data or your local Illumina sequence reads from one or multiple lanes. In case you have on hand BAM files that you may have generated as part of a SNP analysis project, those can be used by SaVor to save on computational time.
 
 SaVor can additionally benchmark SV callset against ground truth sets that you provide. For now, benchmarking is limited to deletion, inversion and duplication SV types. This  feature is disabled by default but can be enabled in the workflow `config.yaml`. You can find more information on how to enable it [here](workflow-setup.md#optional-options).
 
 ## Workflow Requirements
 
 1. A working conda/mamba installation.
-2. Reference genome(A local .fasta/.fna file or an NCBI RefSeq Accession)
+2. Reference genome (a local .fasta/.fna file or an NCBI RefSeq accession)
 3. Illumina paired-end sequence reads.
 4. Optionally, ground truth deletion, duplication and inversion SV sets.
 
