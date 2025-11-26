@@ -1,6 +1,5 @@
 results/
 .snakemake/
-REFERENCE/
 benchmarks/
 test_workflow.sh
 .DS_Store
