@@ -8,3 +8,4 @@ bams/
 logs/
 .venv/
 _build/
+.vscode/
