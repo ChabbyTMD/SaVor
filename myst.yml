@@ -19,7 +19,7 @@ project:
       affiliation: 
         - id: aff1
           name: Department of Biology, San Diego State University, San Diego, California, USA
-  github: https://github.com/ChabbyTMD/svArcher_Standalone
+  github: https://github.com/ChabbyTMD/SaVor
   # To autogenerate a Table of Contents, run "jupyter book init --write-toc"
   toc:
     - file: docs/intro.md
