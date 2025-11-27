@@ -18,18 +18,13 @@ def parse_version(v):
     """Simple version parsing function"""
     return tuple(map(int, v.split('.')))
 
-# Can't be less than 7 cuz of min version in snakefile
+
 SNAKEMAKE_VERSION = 8 if parse_version(snakemake.__version__) >= parse_version("8.0.0") else 7
-logger.warning(f"svArcher: Using Snakemake {snakemake.__version__}")
+logger.warning(f"SaVor: Using Snakemake {snakemake.__version__}")
 if SNAKEMAKE_VERSION >= 8:
     DEFAULT_STORAGE_PREFIX = StorageSettings.default_storage_prefix if StorageSettings.default_storage_prefix is not None else ""
 else:
-    # backwards compatibility w/ snakemake <= 7
-    DEFAULT_STORAGE_PREFIX = workflow.default_remote_prefix
-    if config.get("remote_reads", False):
-        from snakemake.remote.GS import RemoteProvider as GSRemoteProvider
-        GS = GSRemoteProvider()
-        GS_READS_PREFIX = config['remote_reads_prefix']
+    raise WorkflowError("Please upgrade to Snakemake version 8 or higher.")
 
 def parse_sample_sheet(config):
     """Parse sample sheet CSV file."""
@@ -143,7 +138,8 @@ def get_user_bams(sample_id):
 
 def get_bams(wc):
     """Get BAM files for SV calling - always return workflow paths
-    (either final.bam or intermediate bams based on mark_duplicates)"""
+    (either final.bam or intermediate bams based on mark_duplicates)
+    """
     out = {"bam": None, "bai": None}
     if config.get("mark_duplicates", True):
         # Always use the workflow's final BAM path, which could be either
@@ -175,7 +171,6 @@ def merge_bams_input(wc):
     )
 
 def get_reads(wc):
-    """Returns local read files if present. Defaults to SRR if no local reads in sample sheet."""
     row = samples.loc[samples["Run"] == wc.run]
     r1 = f"results/data/fastq/{wc.refGenome}/{wc.sample}/{wc.run}_1.fastq.gz"
     r2 = f"results/data/fastq/{wc.refGenome}/{wc.sample}/{wc.run}_2.fastq.gz"
@@ -183,13 +178,6 @@ def get_reads(wc):
         if row["fq1"].notnull().any() and row["fq2"].notnull().any():
             r1 = row.fq1.item()
             r2 = row.fq2.item()
-            if config.get("remote_reads", False):
-                if SNAKEMAKE_VERSION >= 8:
-                    # remote read path must have full remote prefix, eg: gs://reads_bucket/sample1/...
-                    # depends on snakemake>8 to figure out proper remote provider from prefix using storage()
-                    return {"r1": storage(r1), "r2": storage(r2)}
-                else:
-                    return get_remote_reads(wc)
             if os.path.exists(row.fq1.item()) and os.path.exists(row.fq2.item()):
                 return {"r1": r1, "r2": r2}
             else:
@@ -197,7 +185,6 @@ def get_reads(wc):
                     f"fq1 and fq2 specified for {wc.sample}, but files were not found."
                 )
         else:
-            # this allows mixed srr and user-specified paths for reads
             return {"r1": r1, "r2": r2}
     else:
         return {"r1": r1, "r2": r2}
@@ -209,12 +196,6 @@ def get_reads_fastp(wc):
     else:
         return get_reads(wc)
 
-def get_remote_reads(wildcards):
-    """Use this for reads on a different remote bucket than the default. For backwards compatibility."""
-    row = samples.loc[samples["Run"] == wildcards.run]
-    r1 = GS.remote(os.path.join(GS_READS_PREFIX, row.fq1.item()))
-    r2 = GS.remote(os.path.join(GS_READS_PREFIX, row.fq2.item()))
-    return {"r1": r1, "r2": r2}
 
 def get_read_group(wc):
     """Denote sample name and library_id in read group."""
