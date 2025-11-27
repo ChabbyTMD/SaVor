@@ -6,7 +6,7 @@ For brevity, we shall use BAM files, their associated indices of 4 *Arabidopsis 
 
 This tutorial assumes you have;
 
-1. Set up and configured your snakemake mamba/conda environment and verified snakemake is installed and functional. Instructions for which are in the user guide [here](README.md)
+1. Set up and configured your snakemake mamba/conda environment and verified snakemake is installed and functional. For instructions, please refer to the prerequisites [here](prerequisites.md)
 
 2. You have cloned the repo onto your local machine.
 
@@ -56,7 +56,7 @@ grep "^>" ../REFERENCE/TAIR10_REF.fna > include_contigs.csv
 
 ## Step 3: Perform a Dry Run
 
-Change out of the `config` directory and into the SaVor root directory. Next, activate the snakemake conda/mamba environment unless its already active. Run the following Snakemake command to generate a list of jobs SaVor will execute. This should execute in a couple of seconds. If you encounter any errors, ensure you are in the repository root directory and verify whether you have all necessary configuration and data files present. Refer to the [user guide](README.md) if needed.
+Change out of the `config` directory and into the SaVor root directory. Next, activate the snakemake conda/mamba environment unless its already active. Run the following Snakemake command to generate a list of jobs SaVor will execute. This should execute in a couple of seconds. If you encounter any errors, ensure you are in the repository root directory and verify whether you have all necessary configuration and data files present.
 
 ```bash
 snakemake --cores 1 -np --workflow-profile workflow-profiles/default/
