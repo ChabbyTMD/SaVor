@@ -36,8 +36,7 @@ For a more detailed user guide, you can jump straight in [here](prerequisites.md
 If you use SaVor, please cite in addition to all the tools implemented:
 
 ```text
-SaVor - A Reproducible Structural Variant Calling and Benchmarking Platform from Short-Read Data
-[In Prep]
+Mugoya, Trevor, and Arun Sethuraman. “SaVor - A Reproducible Structural Variant Calling and Benchmarking Platform from Short-Read Data.” Preprint, bioRxiv, December 1, 2025. https://doi.org/10.1101/2025.11.26.690832.
 ```
 
 ## Support
