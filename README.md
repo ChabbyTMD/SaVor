@@ -1,7 +1,14 @@
 # SaVor: A Structural Variant Calling and Benchmarking Workflow for Short-Read Sequence Data.
 
 <div align="center">
+
 <img src="img/savor_logo.png" alt="SaVor Logo" width="350" height="350">
+
+
+
+
+![Static Badge](https://img.shields.io/badge/DOI-doi.org%2F10.1101%2F2025.11.26.690832-09204a?style=for-the-badge)
+
 </div>
 
 *Savor* is a standalone reproducible Snakemake pipeline designed to call structural variants (SVs) from short read genomic sequencing data. The pipeline performs:
@@ -156,8 +163,8 @@ Consult the documentation directory for an in-depth [tutorial](docs/savor_tutori
 If you use SaVor, please cite in addition to all the tools implemented:
 
 ```{text}
-SaVor - A Reproducible Structural Variant Calling and Benchmarking Platform from Short-Read Data
-[In Prep]
+Mugoya, Trevor, and Arun Sethuraman. “SaVor - A Reproducible Structural Variant Calling and Benchmarking Platform from Short-Read Data.” Preprint, bioRxiv, December 1, 2025. https://doi.org/10.1101/2025.11.26.690832.
+
 ```
 
 ## License
