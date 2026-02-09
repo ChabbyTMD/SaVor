@@ -7,7 +7,8 @@
 
 
 
-![Static Badge](https://img.shields.io/badge/DOI-doi.org%2F10.1101%2F2025.11.26.690832-09204a?style=for-the-badge)
+[![Static Badge](https://img.shields.io/badge/DOI-doi.org%2F10.1101%2F2025.11.26.690832-09204a?style=for-the-badge)](https://www.biorxiv.org/content/10.1101/2025.11.26.690832v1)
+[![Jupyter Book Deployment](https://github.com/ChabbyTMD/SaVor/actions/workflows/deploy.yml/badge.svg)](https://github.com/ChabbyTMD/SaVor/actions/workflows/deploy.yml)
 
 </div>
 
