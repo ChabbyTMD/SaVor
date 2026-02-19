@@ -20,7 +20,7 @@ def parse_version(v):
 
 # Can't be less than 7 cuz of min version in snakefile
 SNAKEMAKE_VERSION = 8 if parse_version(snakemake.__version__) >= parse_version("8.0.0") else 7
-logger.warning(f"svArcher: Using Snakemake {snakemake.__version__}")
+logger.warning(f"SaVor: Using Snakemake {snakemake.__version__}")
 if SNAKEMAKE_VERSION >= 8:
     DEFAULT_STORAGE_PREFIX = StorageSettings.default_storage_prefix if StorageSettings.default_storage_prefix is not None else ""
 else:
