@@ -285,6 +285,8 @@ def merge_config(wildcards):
 def svArcher_output(wildcards):
     """Define all final outputs for svArcher pipeline."""
     output = []
+    # Return FASTQ files
+    output.extend(expand("results/{refGenome}/filtered_fastqs/{sample}/{run}_{read}.fastq.gz", refGenome=REFGENOME, sample=samples["BioSample"].unique().tolist(), run=samples["Run"].tolist(), read=[1,2]))
     # Return SV calls from all methods
     output.extend(get_sv_caller_outputs(wildcards))
     # Return merged SV calls per sample
