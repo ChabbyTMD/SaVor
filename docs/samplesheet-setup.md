@@ -7,34 +7,26 @@ Use the following as general guide to determine the columns you need to include 
 
 Depending on what scenario best describes your data implement the recommended columns. Below each example is a corresponding boolean value for what the `use_custom_reference` directive should be in the `config.yaml` file.
 
-### 3.1.1. Single lane samples from NCBI SRA using a reference genome from NCBI refSeq
 
-```csv
-Run,BioSample,LibraryName,refGenome
-SRRXXXXXXX,SAMNXXXXXXXX,SAMNXXXXXXXX,GCF_XXXXXXXXX.X
-```
-
-`use_custom_reference`: False
-
-### 3.1.2. Single lane local reads and NCBI refSeq reference genome
+### 3.1.1. Single lane local reads and NCBI refSeq reference genome
 
 ```csv
 Run,BioSample,LibraryName,refGenome,fq1,fq2
-sample1,sample1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/sample1_lane1_1.fastq.gz,/path/to/sample1_lane1_2.fastq.gz
+sample1,1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/sample1_lane1_1.fastq.gz,/path/to/sample1_lane1_2.fastq.gz
 ```
 
 `use_custom_reference`: False
 
-### 3.1.3. Single lane local reads and a custom reference
+### 3.1.2. Single lane local reads and a custom reference
 
 ```csv
 Run,BioSample,LibraryName,refGenome,refPath,fq1,fq2
-sample1,sample1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.fna,/path/to/sample1_lane1_1.fastq.gz,/path/to/sample1_lane1_2.fastq.gz
+sample1,1,lib_sample1,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.fna,/path/to/sample1_lane1_1.fastq.gz,/path/to/sample1_lane1_2.fastq.gz
 ```
 
 `use_custom_reference`: True
 
-### 3.1.4. Multi lane local reads and NCBI refSeq reference genome
+### 3.1.3. Multi lane local reads and NCBI refSeq reference genome
 
 ```csv
 Run,BioSample,LibraryName,refGenome,fq1,fq2
@@ -46,7 +38,7 @@ sample2,2,lib_sample2,GCF_XXXXXXXXX.X,/path/to/sample2_lane2_1.fastq.gz,/path/to
 
 `use_custom_reference`: False
 
-### 3.1.5. Multi lane local reads and a custom reference
+### 3.1.4. Multi lane local reads and a custom reference
 
 ```csv
 Run,BioSample,LibraryName,refGenome,refPath,fq1,fq2
@@ -58,7 +50,7 @@ sample2,2,lib_sample2,GCF_XXXXXXXXX.X,/path/to/custom/reference/REF_NAME.fna,/pa
 
 `use_custom_reference`: True
 
-### 3.1.6. Single lane with custom reference and user provided BAM files
+### 3.1.5. Single lane with custom reference and user provided BAM files
 
 ```csv
 Run,BioSample,LibraryName,refGenome,refPath,bamPath,baiPath
