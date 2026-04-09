@@ -3,7 +3,11 @@ from snakemake.exceptions import WorkflowError
 rule link_user_bam:
     """Link or copy user-provided BAM files to the expected location in the workflow.
     This rule will only be triggered when user-provided BAM paths are specified in the sample sheet.
-    The rule includes robust error handling for file not found and access errors."""
+    The rule includes robust error handling for file not found and access errors.
+    
+    NOTE: This rule is only used when bamPath and baiPath columns are present in the sample sheet.
+    If those columns are missing, the dedup rule will generate final BAM files from the alignment workflow.
+    """
     output:
         bam = "results/{refGenome}/bams/{sample}_final.bam",
         bai = "results/{refGenome}/bams/{sample}_final.bam.bai"
@@ -25,6 +29,14 @@ rule link_user_bam:
             try:
                 bam_path = params.user_bams["bam"]
                 bai_path = params.user_bams["bai"]
+                
+                # Check if user BAM paths are actually specified (not None)
+                if bam_path is None or bai_path is None:
+                    error_message = f"ERROR: User-provided BAM/BAI paths not specified for sample {wildcards.sample}. " + \
+                                   f"Ensure bamPath and baiPath columns exist in the sample sheet and are populated."
+                    log_file.write(error_message + "\n")
+                    print(error_message, file=sys.stderr)
+                    raise WorkflowError(error_message)
                 
                 # Verify that the BAM file exists and is readable
                 if not os.path.exists(bam_path):
