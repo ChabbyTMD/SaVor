@@ -141,6 +141,27 @@ def get_user_bams(sample_id):
     
     return out
 
+def should_use_user_bams(sample_id):
+    """Check if user-provided BAMs should be used for this sample.
+    
+    Returns True only if both bamPath and baiPath columns exist
+    AND have valid paths for this sample.
+    """
+    if not config.get("use_custom_bams", False):
+        return False
+    if "bamPath" not in samples.columns or "baiPath" not in samples.columns:
+        return False
+    sample_rows = samples.loc[samples["BioSample"] == sample_id]
+    if sample_rows.empty:
+        return False
+    # Check if any valid BAM and BAI paths are provided
+    for _, row in sample_rows.iterrows():
+        bam_path = row.get("bamPath")
+        bai_path = row.get("baiPath")
+        if pd.notna(bam_path) and pd.notna(bai_path) and str(bam_path).strip() and str(bai_path).strip():
+            return True
+    return False
+
 def get_bams(wc):
     """Get BAM files for SV calling - always return workflow paths
     (either final.bam or intermediate bams based on mark_duplicates)"""
@@ -282,11 +303,30 @@ def merge_config(wildcards):
 
     return sv_merge
 
+def get_sample_run_pairs():
+    """Get all valid (sample, run) pairs from the sample sheet.
+    
+    This ensures we only process actual sample-run combinations,
+    not a Cartesian product of all unique samples and runs.
+    """
+    pairs = []
+    for _, row in samples.iterrows():
+        pairs.append((row["BioSample"], row["Run"]))
+    return pairs
+
 def svArcher_output(wildcards):
     """Define all final outputs for svArcher pipeline."""
     output = []
-    # Return FASTQ files
-    output.extend(expand("results/{refGenome}/filtered_fastqs/{sample}/{run}_{read}.fastq.gz", refGenome=REFGENOME, sample=samples["BioSample"].unique().tolist(), run=samples["Run"].tolist(), read=[1,2]))
+    
+    # Get actual sample-run pairs instead of Cartesian product
+    sample_run_pairs = get_sample_run_pairs()
+    
+    # Return FASTQ files - only for actual sample-run combinations
+    for sample, run in sample_run_pairs:
+        for read in [1, 2]:
+            for refGenome in REFGENOME:
+                output.append(f"results/{refGenome}/filtered_fastqs/{sample}/{run}_{read}.fastq.gz")
+    
     # Return SV calls from all methods
     output.extend(get_sv_caller_outputs(wildcards))
     # Return merged SV calls per sample
