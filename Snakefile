@@ -1,5 +1,4 @@
 include: "rules/common.smk"
-include: "rules/user_bams.smk"
 include: "rules/fastq_ingestion.smk"
 include: "rules/alignment.smk"
 include: "rules/lumpy.smk"
@@ -17,6 +16,10 @@ configfile: "config/config.yaml"
 
 wildcard_constraints:
     window=r"\d+"
+
+# Conditionally include user BAMs rule only when configured
+if config.get("use_custom_bams", False):
+    include: "rules/user_bams.smk"
 
 samples = parse_sample_sheet(config)
 REFGENOME = samples['refGenome'].unique().tolist()
