@@ -13,6 +13,8 @@ include_contigs: "config/include_contigs.csv"
 # Check for refPath column in samples.csv and copy reference files if present
 use_custom_reference: true
 
+# Set to true if BAM files are present to skip reference-based alignment
+use_custom_bams: false
 ##############################
 # Optional configuration
 ##############################
