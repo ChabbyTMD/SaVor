@@ -9,3 +9,4 @@ logs/
 .venv/
 _build/
 .vscode/
+savor_viz.ipynb
