@@ -27,10 +27,6 @@ mark_duplicates: true
 # Set a temporary directory for large files (optional)
 # bigtmp: "/tmp"
 
-# Remote reads configuration (optional)
-remote_reads: false
-# remote_reads_prefix: "gs://your-bucket/reads/"
-
 # SV Call Merge Options.
 # Report callers supported by at least N callers, where N can be 1, 2, or 3.
 # N=1 Report calls supported by at least 1 caller (union of all callers)
