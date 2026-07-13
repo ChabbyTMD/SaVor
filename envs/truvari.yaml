@@ -2,7 +2,6 @@ name: truvari
 channels:
   - conda-forge
   - bioconda
-  - defaults
 dependencies:
  - pip==25.1.1
  - pip:
