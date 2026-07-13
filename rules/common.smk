@@ -282,8 +282,8 @@ def merge_config(wildcards):
 
     return sv_merge
 
-def svArcher_output(wildcards):
-    """Define all final outputs for svArcher pipeline."""
+def SaVor_output(wildcards):
+    """Define all final outputs for SaVor pipeline."""
     output = []
     # Return SV calls from all methods
     output.extend(get_sv_caller_outputs(wildcards))
