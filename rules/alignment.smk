@@ -3,7 +3,7 @@ rule bwa_map:
         ref = "results/{refGenome}/data/genome/{refGenome}.fna",
         r1 = "results/{refGenome}/filtered_fastqs/{sample}/{run}_1.fastq.gz",
         r2 = "results/{refGenome}/filtered_fastqs/{sample}/{run}_2.fastq.gz",
-        indexes = expand("results/{{refGenome}}/data/genome/{{refGenome}}.fna.{ext}", ext=["0123", "pac", "bwt.2bit.64", "ann", "amb", "fai"]),
+        indexes = expand("results/{{refGenome}}/data/genome/{{refGenome}}.fna.{ext}", ext=["l2b","mbw", "fai"]),
     output: 
         bam = temp("results/{refGenome}/bams/preMerge/{sample}/{run}.bam"),
         bai = temp("results/{refGenome}/bams/preMerge/{sample}/{run}.bam.bai"),
@@ -93,11 +93,11 @@ rule index_reference:
     input:
         ref="results/{refGenome}/data/genome/{refGenome}.fna"
     output:
-        expand("results/{{refGenome}}/data/genome/{{refGenome}}.fna.{ext}", ext=["0123", "pac", "bwt.2bit.64", "ann", "amb", "fai"])
+        expand("results/{{refGenome}}/data/genome/{{refGenome}}.fna.{ext}", ext=["l2b","mbw", "fai"])
     conda:
         "../envs/fastq2bam.yml"
     shell:
         """
-        bwa-mem2 index {input.ref}
+        minibwa index -t{threads} {input.ref}
         samtools faidx {input.ref}
         """
