@@ -23,4 +23,4 @@ REFGENOME = samples['refGenome'].unique().tolist()
 
 rule all:
     input:
-        svArcher_output,
+        SaVor_output,
