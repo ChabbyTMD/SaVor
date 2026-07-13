@@ -10,3 +10,4 @@ logs/
 _build/
 .vscode/
 savor_viz.ipynb
+*-workspace
