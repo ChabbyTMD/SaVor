@@ -28,5 +28,6 @@ set-threads:
   get_fastq_pe: 8
   fastp: 8
   bwa_map: 16
+  index_reference: 16
   dedup: 16
   wham_call: 16
