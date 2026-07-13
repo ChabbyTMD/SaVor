@@ -303,19 +303,8 @@ def merge_config(wildcards):
 
     return sv_merge
 
-def get_sample_run_pairs():
-    """Get all valid (sample, run) pairs from the sample sheet.
-    
-    This ensures we only process actual sample-run combinations,
-    not a Cartesian product of all unique samples and runs.
-    """
-    pairs = []
-    for _, row in samples.iterrows():
-        pairs.append((row["BioSample"], row["Run"]))
-    return pairs
-
-def svArcher_output(wildcards):
-    """Define all final outputs for svArcher pipeline."""
+def SaVor_output(wildcards):
+    """Define all final outputs for SaVor pipeline."""
     output = []
     
     # Get actual sample-run pairs instead of Cartesian product
