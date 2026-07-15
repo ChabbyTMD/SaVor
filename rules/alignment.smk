@@ -16,7 +16,7 @@ rule bwa_map:
     benchmark:
         "benchmarks/{refGenome}/bwa_mem/{sample}_{run}.txt"
     shell:
-        "bwa-mem2 mem -t {threads} -R {params.rg} {input.ref} {input.r1} {input.r2} 2> {log} | samtools sort -o {output.bam} - && samtools index {output.bam} {output.bai}"
+        "minibwa map -t {threads} -R {params.rg} {input.ref} {input.r1} {input.r2} 2> {log} | samtools sort -o {output.bam} - && samtools index {output.bam} {output.bai}"
 
 rule merge_bams:
     input:
