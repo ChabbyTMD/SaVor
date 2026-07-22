@@ -10,7 +10,7 @@ rule bwa_map:
     params:
         rg = get_read_group
     conda:
-        "../envs/fastq2bam.yml"
+        "../envs/minibwa.yaml"
     log:
         "logs/{refGenome}/bwa_mem/{sample}/{run}.txt"
     benchmark:
@@ -95,7 +95,7 @@ rule index_reference:
     output:
         expand("results/{{refGenome}}/data/genome/{{refGenome}}.fna.{ext}", ext=["l2b","mbw", "fai"])
     conda:
-        "../envs/fastq2bam.yml"
+        "../envs/minibwa.yaml"
     shell:
         """
         minibwa index -t{threads} {input.ref}
