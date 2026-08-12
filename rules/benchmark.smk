@@ -56,7 +56,7 @@ rule del_truvari_bench:
     shell:
         """
         rm -rf {params.bench_dir}
-        truvari bench -b {params.del_truth} -c {input.del_vcf} --reference {input.reference} -o {params.bench_dir} -p 0.6 -P 0.6 -r 1000 2> {log}
+        truvari bench -b {params.del_truth} -c {input.del_vcf} --reference {input.reference} -o {params.bench_dir} -p 0.7 -P 0.7 -r 1000 2> {log}
         """
 
 rule inv_truvari_bench:
