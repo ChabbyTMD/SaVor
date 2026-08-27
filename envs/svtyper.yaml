@@ -1,0 +1,9 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - svtyper==0.7.1
+  - numpy==1.16.5
+  - pysam==0.20.0
+  - scipy==1.2.1
+  - cytoolz==0.10.1
