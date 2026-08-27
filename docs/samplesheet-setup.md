@@ -60,4 +60,3 @@ sample2,1,lib_sample2,GCF_XXXXXXXXX.X,REF_NAME.fna,/path/to/your/sample2.bam,/pa
 `use_custom_reference`: True
 
 For further details on executing the workflow from BAM files refer to the guide [here](user_provided_bams.md).
-
