@@ -87,7 +87,7 @@ rule fix_lumpycall_header:
         bcftools reheader -f {input.fai} -o {output} {input.vcf}
         """
 
-rule sy_typer:
+rule lumpy_sv_typer:
     input:
         unpack(get_bams),
         lumpy_vcf = "results/{refGenome}/SV/lumpy/{sample}.reheader.vcf",
