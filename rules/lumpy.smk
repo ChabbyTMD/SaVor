@@ -79,10 +79,28 @@ rule fix_lumpycall_header:
         vcf = "results/{refGenome}/SV/lumpy/{sample}.raw.vcf",
         fai = "results/{refGenome}/data/genome/{refGenome}.fna.fai",
     output:
-        "results/{refGenome}/SV/lumpy/{sample}.vcf",
+        "results/{refGenome}/SV/lumpy/{sample}.reheader.vcf",
     conda:
         "../envs/lumpy.yaml"
     shell:
         """
         bcftools reheader -f {input.fai} -o {output} {input.vcf}
+        """
+
+rule sy_typer:
+    input:
+        unpack(get_bams),
+        lumpy_vcf = "results/{refGenome}/SV/lumpy/{sample}.reheader.vcf",
+    output:
+        genotyped_vcf = "results/{refGenome}/SV/lumpy/{sample}.vcf",
+        metric_json = "results/{refGenome}/SV/lumpy/{sample}.metrics.json",
+    conda:
+        "../envs/svtyper.yaml"
+    shell:
+        """
+        svtyper \
+            -i {input.lumpy_vcf} \
+            -B {input.bam} \
+            -l {output.metric_json} \
+            > {output.genotyped_vcf}
         """
