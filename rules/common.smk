@@ -91,28 +91,28 @@ def get_custom_reference_path(refGenome):
                 return str(ref_path).strip()
     return None
 
-def has_user_bams(sample_id):
-    """Check if a sample has user-provided BAM and BAI paths specified.
+# def has_user_bams(sample_id):
+#     """Check if a sample has user-provided BAM and BAI paths specified.
     
-    This function only checks if valid paths are specified in the sample sheet,
-    without verifying that the files actually exist on disk. The existence check
-    should be performed at the time of use to avoid TOCTOU race conditions.
-    """
-    if "bamPath" not in samples.columns or "baiPath" not in samples.columns:
-        return False
+#     This function only checks if valid paths are specified in the sample sheet,
+#     without verifying that the files actually exist on disk. The existence check
+#     should be performed at the time of use to avoid TOCTOU race conditions.
+#     """
+#     if "bamPath" not in samples.columns or "baiPath" not in samples.columns:
+#         return False
     
-    sample_rows = samples.loc[samples["BioSample"] == sample_id]
-    if sample_rows.empty:
-        return False
+#     sample_rows = samples.loc[samples["BioSample"] == sample_id]
+#     if sample_rows.empty:
+#         return False
     
-    # Check if any valid BAM and BAI paths are provided (without existence check)
-    for _, row in sample_rows.iterrows():
-        bam_path = row.get("bamPath")
-        bai_path = row.get("baiPath")
-        if pd.notna(bam_path) and pd.notna(bai_path) and str(bam_path).strip() and str(bai_path).strip():
-            # Only check that paths are specified, not that files exist
-            return True
-    return False
+#     # Check if any valid BAM and BAI paths are provided (without existence check)
+#     for _, row in sample_rows.iterrows():
+#         bam_path = row.get("bamPath")
+#         bai_path = row.get("baiPath")
+#         if pd.notna(bam_path) and pd.notna(bai_path) and str(bam_path).strip() and str(bai_path).strip():
+#             # Only check that paths are specified, not that files exist
+#             return True
+#     return False
 
 def get_user_bams(sample_id):
     """Get user-provided BAM and BAI file paths for a sample.
@@ -151,6 +151,10 @@ def get_bams(wc):
         out["bam"] = "results/{refGenome}/bams/{sample}_final.bam"
         out["bai"] = "results/{refGenome}/bams/{sample}_final.bam.bai"
         return out
+    elif config.get("user_provided_bams", True):
+        # If mark_duplicates is disabled, check if user-provided BAMs exist
+        user_bams = get_user_bams(wc.sample)
+        return user_bams
     else:
         # If mark_duplicates is disabled, use the raw input (pre or post merge)
         return dedup_input(wc)
