@@ -151,10 +151,18 @@ def get_bams(wc):
         out["bam"] = "results/{refGenome}/bams/{sample}_final.bam"
         out["bai"] = "results/{refGenome}/bams/{sample}_final.bam.bai"
         return out
-    elif config.get("user_provided_bams", True):
-        # If mark_duplicates is disabled, check if user-provided BAMs exist
+    # If mark_duplicates is disabled, optionally use user‑provided BAMs.
+    # Default to *not* using them unless the config explicitly enables the feature.
+    elif config.get("user_provided_bams", False):
+        # Retrieve user‑provided paths.
         user_bams = get_user_bams(wc.sample)
-        return user_bams
+        # Only accept the mapping when *both* BAM and BAI are defined.
+        if user_bams.get("bam") and user_bams.get("bai"):
+            return user_bams
+        # Fallback to the standard deduplication input when incomplete.
+        # This mirrors previous behaviour but avoids returning a partially
+        # populated mapping that would cause downstream failures.
+        return dedup_input(wc)
     else:
         # If mark_duplicates is disabled, use the raw input (pre or post merge)
         return dedup_input(wc)
