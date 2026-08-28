@@ -50,6 +50,10 @@ rule dedup:
 
 # Define rule order to ensure the correct rule is chosen for generating final BAMs
 # When a sample has user-provided BAMs, link_user_bam will be chosen over dedup
+if config.get("use_user_bams", True):
+    ruleorder: link_user_bam > dedup
+else:
+    ruleorder: dedup > link_user_bam
 ruleorder: link_user_bam > dedup
 
 rule download_reference:
