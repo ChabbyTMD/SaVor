@@ -24,12 +24,9 @@ logger.warning(f"SaVor: Using Snakemake {snakemake.__version__}")
 if SNAKEMAKE_VERSION >= 8:
     DEFAULT_STORAGE_PREFIX = StorageSettings.default_storage_prefix if StorageSettings.default_storage_prefix is not None else ""
 else:
-    # backwards compatibility w/ snakemake <= 7
-    DEFAULT_STORAGE_PREFIX = workflow.default_remote_prefix
-    if config.get("remote_reads", False):
-        from snakemake.remote.GS import RemoteProvider as GSRemoteProvider
-        GS = GSRemoteProvider()
-        GS_READS_PREFIX = config['remote_reads_prefix']
+    raise WorkflowError(
+            f"SaVor: Unsupported Snakemake version {snakemake.__version__}. Please use Snakemake 8.0.0 or higher."
+        )
 
 def parse_sample_sheet(config):
     """Parse sample sheet CSV file."""
@@ -91,29 +88,6 @@ def get_custom_reference_path(refGenome):
                 return str(ref_path).strip()
     return None
 
-# def has_user_bams(sample_id):
-#     """Check if a sample has user-provided BAM and BAI paths specified.
-    
-#     This function only checks if valid paths are specified in the sample sheet,
-#     without verifying that the files actually exist on disk. The existence check
-#     should be performed at the time of use to avoid TOCTOU race conditions.
-#     """
-#     if "bamPath" not in samples.columns or "baiPath" not in samples.columns:
-#         return False
-    
-#     sample_rows = samples.loc[samples["BioSample"] == sample_id]
-#     if sample_rows.empty:
-#         return False
-    
-#     # Check if any valid BAM and BAI paths are provided (without existence check)
-#     for _, row in sample_rows.iterrows():
-#         bam_path = row.get("bamPath")
-#         bai_path = row.get("baiPath")
-#         if pd.notna(bam_path) and pd.notna(bai_path) and str(bam_path).strip() and str(bai_path).strip():
-#             # Only check that paths are specified, not that files exist
-#             return True
-#     return False
-
 def get_user_bams(sample_id):
     """Get user-provided BAM and BAI file paths for a sample.
     
@@ -145,30 +119,20 @@ def get_bams(wc):
     """Get BAM files for SV calling - always return workflow paths
     (either final.bam or intermediate bams based on mark_duplicates)"""
     out = {"bam": None, "bai": None}
-    if config.get("mark_duplicates", True):
-        # Always use the workflow's final BAM path, which could be either
-        # user-provided (via link_user_bam) or workflow-generated (via dedup)
-        out["bam"] = "results/{refGenome}/bams/{sample}_final.bam"
-        out["bai"] = "results/{refGenome}/bams/{sample}_final.bam.bai"
-        return out
-    # If mark_duplicates is disabled, optionally use user‑provided BAMs.
-    # Default to *not* using them unless the config explicitly enables the feature.
-    elif config.get("user_provided_bams", False):
-        # Retrieve user‑provided paths.
-        user_bams = get_user_bams(wc.sample)
-        # Only accept the mapping when *both* BAM and BAI are defined.
-        if user_bams.get("bam") and user_bams.get("bai"):
-            return user_bams
-        # Fallback to the standard deduplication input when incomplete.
-        # This mirrors previous behaviour but avoids returning a partially
-        # populated mapping that would cause downstream failures.
-        return dedup_input(wc)
-    else:
-        # If mark_duplicates is disabled, use the raw input (pre or post merge)
-        return dedup_input(wc)
+    # Always use the workflow's final BAM path, which could be either
+    # user-provided (via link_user_bam) or workflow-generated (via dedup)
+    out["bam"] = "results/{refGenome}/bams/{sample}_final.bam"
+    out["bai"] = "results/{refGenome}/bams/{sample}_final.bam.bai"
+    return out
 
 def dedup_input(wc):
-    """Get input for deduplication step - either single BAM or merged BAM."""
+    """Get input for deduplication step - either single BAM or merged BAM.
+    When user_provided_bams is true, return non-existent paths to prevent this rule from running."""
+    if config.get("user_provided_bams", False):
+        # Return non-existent paths to make dedup rule unsatisfiable
+        # This forces Snakemake to choose link_user_bam instead
+        return {"bam": "user_provided_bam_placeholder.bam", "bai": "user_provided_bam_placeholder.bai"}
+    
     runs = samples.loc[samples["BioSample"] == wc.sample]["Run"].tolist()
 
     if len(runs) == 1:
@@ -195,13 +159,6 @@ def get_reads(wc):
         if row["fq1"].notnull().any() and row["fq2"].notnull().any():
             r1 = row.fq1.item()
             r2 = row.fq2.item()
-            if config.get("remote_reads", False):
-                if SNAKEMAKE_VERSION >= 8:
-                    # remote read path must have full remote prefix, eg: gs://reads_bucket/sample1/...
-                    # depends on snakemake>8 to figure out proper remote provider from prefix using storage()
-                    return {"r1": storage(r1), "r2": storage(r2)}
-                else:
-                    return get_remote_reads(wc)
             if os.path.exists(row.fq1.item()) and os.path.exists(row.fq2.item()):
                 return {"r1": r1, "r2": r2}
             else:
