@@ -4,7 +4,7 @@
 Clone the repository from github onto a suitable directory on your local machine or cluster with;
 
 ```bash
-git clone https://github.com/ChabbyTMD/svArcher_Standalone.git
+git clone https://github.com/ChabbyTMD/SaVor.git
 ```
 
 Once the SaVor repository has been cloned onto your machine. You may set up your analysis in one of two ways depending on the location of your reads.
@@ -51,6 +51,7 @@ In the workflow `config.yaml` located in the `config/` directory you’ll find a
 1. `samples` : The relative or absolute path to your `samples.csv` file.
 2. `include_contigs` : A simple text file with the chromosome/contig names of your reference genome/assembly. Each entry should exist on its own line.
 3. `use_custom_reference` : Set to `True` if you are using a locally available reference genome. Set to `False` if you want your reference downloaded from NCBI’s refSeq database.
+4. `user_provided_bams` : Set to `True` if you are using user-provided BAM files. Set to `False` if you want the workflow to generate BAM files from your fastq files or SRA accesions.
 
 ### Optional options:
 
