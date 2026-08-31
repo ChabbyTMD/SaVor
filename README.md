@@ -15,7 +15,7 @@
 *Savor* is a standalone reproducible Snakemake pipeline designed to call structural variants (SVs) from short read genomic sequencing data. The pipeline performs:
 
 1. **Data ingestion**: FASTQ download/processing and quality control
-2. **Read alignment**: BWA-MEM2 alignment with duplicate marking
+2. **Read alignment**: MINIBWA alignment with duplicate marking
 3. **Structural variant calling**: Using an ensemble of three SV callers (DELLY, Lumpy, and WHAM)
 4. **Post-processing**: Merging, filtering, and consensus calling with SURVIVOR
 
@@ -134,7 +134,7 @@ To enable benchmarking against truth sets:
    - Create BWA and samtools indices (`index_reference`)
 3. **Read Alignment**:
 
-   - BWA-MEM2 alignment (`bwa_map`)
+   - MINIBWA alignment (`bwa_map`)
    - BAM merging if multiple runs per sample (`merge_bams`)
    - Duplicate marking with sambamba (`dedup`)
 4. **Structural Variant Calling**:
