@@ -99,10 +99,9 @@ conda activate snakemake
    - BAM files: `BioSample`, `Run`, `LibraryName`, `refGenome`, `refPath`, `bamPath`, `baiPath`
 
 <br>
-<u>
-Column descriptions:
 
-</u>
+#### Column descriptions:
+
 
 **BioSample**: Specify the sample name or NCBI BioSample ID here if available. For multi-lane sequence samples, this should be the same for all lanes of the same sample.
 
