@@ -46,7 +46,7 @@ snakemake --version
 Clone the repository from github onto a suitable directory on your local machine or cluster with;
 
 ```bash
-git clone https://github.com/ChabbyTMD/svArcher_Standalone.git
+git clone https://github.com/ChabbyTMD/SaVor.git
 ```
 
 Once the SaVor repository has been cloned onto your machine. You may set up your analysis in one of two ways depending on the location of your reads.

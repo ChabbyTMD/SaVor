@@ -41,4 +41,4 @@ Mugoya, Trevor, and Arun Sethuraman. “SaVor - A Reproducible Structural Varian
 
 ## Support
 
-For questions and issues, please submit an issue on the [repo](https://github.com/ChabbyTMD/svArcher_Standalone/issues/new).
+For questions and issues, please submit an issue on the [repo](https://github.com/ChabbyTMD/SaVor/issues/new).
