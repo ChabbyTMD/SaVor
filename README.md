@@ -98,6 +98,29 @@ conda activate snakemake
    - Local FASTQ reads with local genome reference: `BioSample`, `Run`, `LibraryName`, `refGenome`, `refPath`, `fq1`, `fq2`
    - BAM files: `BioSample`, `Run`, `LibraryName`, `refGenome`, `refPath`, `bamPath`, `baiPath`
 
+<br>
+<u>
+Column descriptions:
+
+</u>
+
+**BioSample**: Specify the sample name or NCBI BioSample ID here if available. For multi-lane sequence samples, this should be the same for all lanes of the same sample.
+
+**Run**: Set to `1` for samples sequenced on a single lane. For multi-lane samples, this should be set to the lane number for the set of paired-end sample reads.
+
+**LibraryName**: Set to a library name for the sequencing run or the sample name prefixed with `lib_` e.g., `lib_sample1`. Samples sequenced on multiple lanes should have the same library name for all lanes. 
+
+**refGenome**: Specify the refSeq genome assembly accession or species name for your local copy of your reference genome e.g `genus_species`.
+
+**refPath**: If you intend to use a local reference genome, specify the relative or absolute path to the reference genome FASTA file here. 
+
+**fq1, fq2**: Specify the relative or absolute paths to the paired-end FASTQ files here. For SRA data, do not include these columns. 
+
+**bamPath, baiPath**: Specify the relative or absolute paths to the BAM and BAI files here. For SRA or FASTQ data, do not include these columns.
+
+
+<br>
+
 > [!TIP]
 > For detailed guidance on samplesheet setup, please refer to the [user guide](docs/README.md).
 <br>
