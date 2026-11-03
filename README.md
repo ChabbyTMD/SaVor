@@ -124,8 +124,8 @@ conda activate snakemake
    awk -F"\t" '{print $3}' sequence_report.tsv | tail -n +2 > include_contigs.csv
    ```
 
-   > [!NOTE]
-   > Remove any chromosome ID's that are associated with unplaced scaffolds, or organellar sequences.
+> [!NOTE]
+> Remove any chromosome ID's that are associated with unplaced scaffolds, or organellar sequences.
 
 
 For detailed guidance on workflow setup, please consult the [user guide](docs/README.md).
