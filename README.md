@@ -65,7 +65,7 @@ SaVor_Standalone/
 - [Conda](https://docs.conda.io/en/latest/) or [Mamba](https://mamba.readthedocs.io/en/latest/)
 - [Snakemake](https://snakemake.readthedocs.io/en/stable/) (≥9.0)
 
-### Setup
+### Environment Setup
 
 1. Clone or download this repository
 2. Activate the existing snakemake environment:
@@ -83,6 +83,48 @@ conda activate snakemake
 
 ## Usage
 
+### Workflow Setup
+
+1. Create a `samplesheet.csv` file in the `config/` directory. Depending on your input data, the samplesheet should include the following column headers:
+
+   - SRA data with refSeq genome reference: `BioSample`, `Run`, `LibraryName`, `refGenome`
+   - SRA data with local genome reference: `BioSample`, `Run`, `LibraryName`, `refGenome`, `refPath`
+   - Local FASTQ reads with refSeq genome reference: `BioSample`, `Run`, `LibraryName`, `refGenome`, `fq1`, `fq2`
+   - Local FASTQ reads with local genome reference: `BioSample`, `Run`, `LibraryName`, `refGenome`, `refPath`, `fq1`, `fq2`
+   - BAM files: `BioSample`, `Run`, `LibraryName`, `refGenome`, `refPath`, `bamPath`, `baiPath`
+
+> [!TIP]
+> For detailed guidance on samplesheet setup, please refer to the [user guide](docs/README.md).
+<br>
+
+
+2. Edit the attributes in the `config.yaml` file to fit your sequence data with the following:
+
+   - `samples`: Set to the relative or absolute path to the `samplesheet.csv` file. Note that if you opt to specify a relative path, it should be relative to the workflow root directory.
+   - `include_contigs`: Set to a relative or absolute path to an `include_contigs.csv` CSV file. This is a one column CSV file contanining the chromosome names of your reference genome. You can generate this with the following bash command:
+   
+   ```bash
+   grep ">" <your_reference_genome.fasta> | cut -d " " -f 1 | sed 's/>//g' > include_contigs.csv
+   ```
+
+   If a refSeq reference genome is used, download the refSeq `sequence_report.tsv` from the NCBI genome page for your species. Scroll to the `Chromosomes` section, click the download button and select `refSeq`.
+   
+   <div align="center">
+   <img src="img/refseq-report.png" alt="NCBI Download" width="70%">
+   </div>
+   <br>
+   This will download a TSV file from which we can extract chromosome names with the following command:
+
+   ```bash
+   awk -F"\t" '{print $3}' sequence_report.tsv | tail -n +2 > include_contigs.csv
+   ```
+
+   >[!NOTE]
+   > Remove any chromosome ID's that are associated with unplaced scaffolds, or organellar sequences.
+
+
+For detailed guidance on workflow setup, please consult the [user guide](docs/README.md).
+
 ### Basic Run
 
 ```bash
@@ -90,18 +132,17 @@ conda activate snakemake
 conda activate snakemake
 
 # Dry run to check workflow
-snakemake -n
+snakemake -np --cores 1 --use-conda 
 
-# Run with at least 8 cores
-snakemake --cores <num_of_cores> --use-conda
+# Local snakemake run
+snakemake --cores <num_of_cores> --use-conda ---rerun-incomplete
+
 
 # Run on cluster (SLURM example)
 snakemake --workflow-profile workflow-profile/cluster-generic-slurm/
+
 ```
 
-### User Guide
-
-For detailed guidance on workflow setup, please consult the [user guide](docs/README.md).
 ### Output Files
 
 The pipeline generates several key outputs:
