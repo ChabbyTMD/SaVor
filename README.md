@@ -67,7 +67,12 @@ SaVor_Standalone/
 
 ### Environment Setup
 
-1. Clone or download this repository
+1. Clone or download this repository and change directory into `SaVor`
+
+```bash
+git clone https://github.com/ChabbyTMD/SaVor.git
+```
+
 2. Activate the existing snakemake environment:
 
 ```bash
@@ -119,7 +124,7 @@ conda activate snakemake
    awk -F"\t" '{print $3}' sequence_report.tsv | tail -n +2 > include_contigs.csv
    ```
 
-   >[!NOTE]
+   > [!NOTE]
    > Remove any chromosome ID's that are associated with unplaced scaffolds, or organellar sequences.
 
 
