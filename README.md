@@ -128,7 +128,6 @@ conda activate snakemake
 > Remove any chromosome ID's that are associated with unplaced scaffolds, or organellar sequences.
 
 
-For detailed guidance on workflow setup, please consult the [user guide](docs/README.md).
 
 ### Basic Run
 
@@ -186,7 +185,7 @@ To enable benchmarking against truth sets:
 4. **Structural Variant Calling**:
 
    - DELLY calling (`delly_call`, `delly_vcf`)
-   - Lumpy calling (`discordant_extract`, `split_read_extract`, `lumpy_call`)
+   - Lumpy calling (`discordant_extract`, `split_read_extract`, `lumpy_call`, `lumpy_sv_typer`)
    - WHAM calling (`wham_call`)
 5. **Post-processing**:
 
@@ -202,7 +201,7 @@ To enable benchmarking against truth sets:
 - **Storage**: ~10-50GB per sample depending on coverage
 - **Time**: 2-8 hours per sample depending on coverage and resources
 
-## Workflow Tutorial
+# Workflow Tutorial
 Consult the documentation directory for an in-depth [tutorial](docs/savor_tutorial.md).
 
 ## Citation
@@ -213,10 +212,6 @@ If you use SaVor, please cite in addition to all the tools implemented:
 Mugoya, Trevor, and Arun Sethuraman. “SaVor - A Reproducible Structural Variant Calling and Benchmarking Platform from Short-Read Data.” Preprint, bioRxiv, December 1, 2025. https://doi.org/10.1101/2025.11.26.690832.
 
 ```
-
-## License
-
-[TBD]
 
 ## Support
 
