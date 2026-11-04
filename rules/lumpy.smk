@@ -14,6 +14,8 @@ rule discordant_extract:
         "logs/{refGenome}/SV/lumpy_prep/{sample}.discordant_extract.txt"
     conda:
         "../envs/lumpy.yaml"
+    benchmark:
+        "benchmarks/{refGenome}/SV/lumpy_prep/{sample}.discordant_extract.txt"
     shell:
         """
         samtools view -b -F 1294 {input.bam} > {output.unsorted_discordant_bam} 2> {log}
@@ -28,6 +30,8 @@ rule split_read_extract:
         "logs/{refGenome}/SV/lumpy_prep/{sample}.split_read_extract.txt"
     conda:
         "../envs/lumpy.yaml"
+    benchmark:
+        "benchmarks/{refGenome}/SV/lumpy_prep/{sample}.split_read_extract.txt"
     shell:
         """
         samtools view -h {input.bam} \
@@ -47,6 +51,8 @@ rule sort_splits_discordants:
         "logs/{refGenome}/SV/lumpy_prep/{sample}.sort_splits_discordants.txt"
     conda:
         "../envs/lumpy.yaml"
+    benchmark:
+        "benchmarks/{refGenome}/SV/lumpy_prep/{sample}.sort_splits_discordants.txt"
     shell:
         """
         samtools sort -o {output.discordant_bam} {input.unsorted_discordant_bam} 2> {log}
@@ -65,6 +71,8 @@ rule lumpy_call:
         "logs/{refGenome}/SV/lumpy/{sample}.txt"
     conda:
         "../envs/lumpy.yaml"
+    benchmark:
+        "benchmarks/{refGenome}/SV/lumpy/{sample}.lumpy.txt"
     shell:
         """
         lumpyexpress \
@@ -96,6 +104,8 @@ rule lumpy_sv_typer:
         metric_json = "results/{refGenome}/SV/lumpy/{sample}.metrics.json",
     conda:
         "../envs/svtyper.yaml"
+    benchmark:
+        "benchmarks/{refGenome}/SV/lumpy/{sample}.svtyper.txt"
     shell:
         """
         svtyper \
