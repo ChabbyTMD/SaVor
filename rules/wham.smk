@@ -10,6 +10,8 @@ rule wham_call:
 		"../envs/wham.yaml"
 	params:
 		contigs = lambda wc: read_contig_file(config["include_contigs"])
+	benchmark:
+		"benchmarks/{refGenome}/SV/wham/{sample}.wham.txt"
 	shell:
 		"""
 		whamg -x {threads} -c {params.contigs} -a {input.ref} -f {input.bam} > {output.wham_vcf} 2> {log}
@@ -25,6 +27,8 @@ rule fix_whamcall_header:
 		"results/{refGenome}/SV/wham/{sample}.vcf",
 	conda:
 		"../envs/wham.yaml"
+	benchmark:
+		"benchmarks/{refGenome}/SV/wham/{sample}.fix_header.txt"
 	shell:
 		"""
 		bcftools reheader -f {input.fai} -o {output} {input.wham_vcf}
