@@ -9,6 +9,8 @@ rule delly_call:
         "logs/{refGenome}/SV/delly/{sample}.log"
     conda:
         "../envs/delly.yaml"
+    benchmark:
+        "benchmarks/{refGenome}/SV/delly/{sample}.delly.bcf.txt"
     shell:
         "delly call -g {input.ref} -o {output.delly_bcf} {input.bam} 2> {log}"
 
@@ -22,6 +24,8 @@ rule delly_vcf:
         "../envs/delly.yaml"
     log:
         "logs/{refGenome}/SV/delly/{sample}_vcf.log"
+    benchmark:
+        "benchmarks/{refGenome}/SV/delly/{sample}_vcf.txt"
     shell:
         """
         bcftools view {input.delly_bcf} -O v -o {output.delly_vcf} 2> {log}

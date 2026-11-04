@@ -53,6 +53,8 @@ rule del_truvari_bench:
     params:
         del_truth = lambda wc: config.get("deletions", ""),
         bench_dir = "results/{refGenome}/SV/benchmark/DEL/DEL_METRICS/",
+    benchmark:
+        "benchmarks/{refGenome}/SV/truvari-benchmark/DEL/truvari_del.txt"
     shell:
         """
         rm -rf {params.bench_dir}
@@ -72,6 +74,8 @@ rule inv_truvari_bench:
     params:
         inv_truth = lambda wc: config.get("inversions", ""),
         bench_dir = "results/{refGenome}/SV/benchmark/INV/INV_METRICS/",
+    benchmark:
+        "benchmarks/{refGenome}/SV/truvari-benchmark/INV/truvari_inv.txt"
     shell:
         """
         rm -rf {params.bench_dir}
@@ -91,6 +95,8 @@ rule dup_truvari_bench:
     params:
         dup_truth = lambda wc: config.get("duplications", ""),
         bench_dir = "results/{refGenome}/SV/benchmark/DUP/DUP_METRICS/",
+    benchmark:
+        "benchmarks/{refGenome}/SV/truvari-benchmark/DUP/truvari_dup.txt"
     shell:
         """
         rm -rf {params.bench_dir}
