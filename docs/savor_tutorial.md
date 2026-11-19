@@ -51,7 +51,13 @@ Alternatively, you can easily determine the contig IDs from the reference file i
 grep "^>" ../REFERENCE/TAIR10_REF.fna > include_contigs.csv
 ```
 
-3. `sv_merge` - Change the value to `1` to generate a union set of SVs of the 4 samples.
+3. `use_custom_reference:` = Set this to `True` to enable the tutorial reference genome.
+
+4. `user_provided_bams:` = Set this to `True` to enable the use of user-provided BAM files.
+
+5. `mark_duplicates:` = Set this to `False` since we are using user-provided BAM files that are already marked for duplicates.
+
+6. `sv_merge` - Change the value to `1` to generate a union set of SVs of the 4 samples.
 
 
 ## Step 3: Perform a Dry Run
