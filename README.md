@@ -161,7 +161,7 @@ conda activate snakemake
 snakemake -np --cores 1 --use-conda 
 
 # Local snakemake run
-snakemake --cores <num_of_cores> --use-conda ---rerun-incomplete
+snakemake --cores <num_of_cores> --use-conda ---rerun-incomplete --workflow-profile workflow-profiles/default/
 
 
 # Run on cluster (SLURM example)
