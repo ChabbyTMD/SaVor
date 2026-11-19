@@ -23,10 +23,10 @@ When user-provided BAM files are detected, the workflow will:
 
 **Note**:
 
-- Ensure your BAM files are properly sorted and indexed.
-- The workflow will copy your BAM files to maintain a consistent structure for downstream steps.
-- You can mix samples with user-provided BAMs and samples that need alignment in the same run.
-- The `mark_duplicates` setting is ignored for user-provided BAMs, as they are used as-is. Ensure BAM files provided to the workflow are properly marked for duplicates. One can do this with [sambamba](https://github.com/biod/sambamba) for example:
+- Ensure your BAM files are properly sorted, duplicate marked and indexed.
+- Set the `user_provided_bams` setting to `True` in your config file. The workflow will copy your BAM files to maintain a consistent structure for downstream steps.
+- The `mark_duplicates` setting must be set to `False` for user-provided BAMs. Ensure BAM files provided to the workflow are properly marked for duplicates. One can do this with [sambamba](https://github.com/biod/sambamba) for example:
+
  ```bash
   sambamba markdup -t 8 -p input.bam output.bam
   ```
