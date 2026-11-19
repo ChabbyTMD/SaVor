@@ -59,13 +59,16 @@ grep "^>" ../REFERENCE/TAIR10_REF.fna > include_contigs.csv
 
 6. `sv_merge` - Change the value to `1` to generate a union set of SVs of the 4 samples.
 
+>[!NOTE]
+> A tutorial configuration file has been provided in the `config` directory as `tutorial-config.yaml`.
+
 
 ## Step 3: Perform a Dry Run
 
 Change out of the `config` directory and into the SaVor root directory. Next, activate the snakemake conda/mamba environment unless its already active. Run the following Snakemake command to generate a list of jobs SaVor will execute. This should execute in a couple of seconds. If you encounter any errors, ensure you are in the repository root directory and verify whether you have all necessary configuration and data files present.
 
 ```bash
-snakemake --cores 1 -np --workflow-profile workflow-profiles/default/
+snakemake --cores 1 -np --workflow-profile workflow-profiles/default/ --configfile config/tutorial-config.yaml
 ```
 
 If your workflow is configured correctly, you should see the following message print out.
@@ -83,7 +86,7 @@ Once your dry run completes successfully, you may remove the `n` option above to
 
 ```bash
 # This assumes you have at least 8 cores on your local machines CPU.
-snakemake --cores 8 -np --workflow-profile workflow-profiles/default/
+snakemake --cores 8 -np --workflow-profile workflow-profiles/default/ --configfile config/tutorial-config.yaml
 
 ```
 
