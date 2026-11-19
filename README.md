@@ -65,9 +65,14 @@ SaVor_Standalone/
 - [Conda](https://docs.conda.io/en/latest/) or [Mamba](https://mamba.readthedocs.io/en/latest/)
 - [Snakemake](https://snakemake.readthedocs.io/en/stable/) (≥9.0)
 
-### Setup
+### Environment Setup
 
-1. Clone or download this repository
+1. Clone or download this repository and change directory into `SaVor`
+
+```bash
+git clone https://github.com/ChabbyTMD/SaVor.git
+```
+
 2. Activate the existing snakemake environment:
 
 ```bash
@@ -83,6 +88,69 @@ conda activate snakemake
 
 ## Usage
 
+### Workflow Setup
+
+1. Create a `samplesheet.csv` file in the `config/` directory. Depending on your input data, the samplesheet should include the following column headers:
+
+   - SRA data with refSeq genome reference: `BioSample`, `Run`, `LibraryName`, `refGenome`
+   - SRA data with local genome reference: `BioSample`, `Run`, `LibraryName`, `refGenome`, `refPath`
+   - Local FASTQ reads with refSeq genome reference: `BioSample`, `Run`, `LibraryName`, `refGenome`, `fq1`, `fq2`
+   - Local FASTQ reads with local genome reference: `BioSample`, `Run`, `LibraryName`, `refGenome`, `refPath`, `fq1`, `fq2`
+   - BAM files: `BioSample`, `Run`, `LibraryName`, `refGenome`, `refPath`, `bamPath`, `baiPath`
+
+<br>
+
+#### Column descriptions:
+
+
+**BioSample**: Specify the sample name or NCBI BioSample ID here if available. For multi-lane sequence samples, this should be the same for all lanes of the same sample.
+
+**Run**: Set to `1` for samples sequenced on a single lane. For multi-lane samples, this should be set to the lane number for the set of paired-end sample reads.
+
+**LibraryName**: Set to a library name for the sequencing run or the sample name prefixed with `lib_` e.g., `lib_sample1`. Samples sequenced on multiple lanes should have the same library name for all lanes. 
+
+**refGenome**: Specify the refSeq genome assembly accession or species name for your local copy of your reference genome e.g `genus_species`.
+
+**refPath**: If you intend to use a local reference genome, specify the relative or absolute path to the reference genome FASTA file here. 
+
+**fq1, fq2**: Specify the relative or absolute paths to the paired-end FASTQ files here. For SRA data, do not include these columns. 
+
+**bamPath, baiPath**: Specify the relative or absolute paths to the BAM and BAI files here. For SRA or FASTQ data, do not include these columns.
+
+
+<br>
+
+> [!TIP]
+> For detailed guidance on samplesheet setup, please refer to the [user guide](docs/README.md).
+<br>
+
+
+2. Edit the attributes in the `config.yaml` file to fit your sequence data with the following:
+
+   - `samples`: Set to the relative or absolute path to the `samplesheet.csv` file. Note that if you opt to specify a relative path, it should be relative to the workflow root directory.
+   - `include_contigs`: Set to a relative or absolute path to an `include_contigs.csv` CSV file. This is a one column CSV file contanining the chromosome names of your reference genome. You can generate this with the following bash command:
+   
+   ```bash
+   grep ">" <your_reference_genome.fasta> | cut -d " " -f 1 | sed 's/>//g' > include_contigs.csv
+   ```
+
+   If a refSeq reference genome is used, download the refSeq `sequence_report.tsv` from the NCBI genome page for your species. Scroll to the `Chromosomes` section, click the download button and select `refSeq`.
+   
+   <div align="center">
+   <img src="img/refseq-report.png" alt="NCBI Download" width="70%">
+   </div>
+   <br>
+   This will download a TSV file from which we can extract chromosome names with the following command:
+
+   ```bash
+   awk -F"\t" '{print $3}' sequence_report.tsv | tail -n +2 > include_contigs.csv
+   ```
+
+> [!NOTE]
+> Remove any chromosome ID's that are associated with unplaced scaffolds, or organellar sequences.
+
+
+
 ### Basic Run
 
 ```bash
@@ -90,18 +158,17 @@ conda activate snakemake
 conda activate snakemake
 
 # Dry run to check workflow
-snakemake -n
+snakemake -np --cores 1 --use-conda 
 
-# Run with at least 8 cores
-snakemake --cores <num_of_cores> --use-conda
+# Local snakemake run
+snakemake --cores <num_of_cores> --use-conda ---rerun-incomplete
+
 
 # Run on cluster (SLURM example)
 snakemake --workflow-profile workflow-profile/cluster-generic-slurm/
+
 ```
 
-### User Guide
-
-For detailed guidance on workflow setup, please consult the [user guide](docs/README.md).
 ### Output Files
 
 The pipeline generates several key outputs:
@@ -140,7 +207,7 @@ To enable benchmarking against truth sets:
 4. **Structural Variant Calling**:
 
    - DELLY calling (`delly_call`, `delly_vcf`)
-   - Lumpy calling (`discordant_extract`, `split_read_extract`, `lumpy_call`)
+   - Lumpy calling (`discordant_extract`, `split_read_extract`, `lumpy_call`, `lumpy_sv_typer`)
    - WHAM calling (`wham_call`)
 5. **Post-processing**:
 
@@ -156,7 +223,7 @@ To enable benchmarking against truth sets:
 - **Storage**: ~10-50GB per sample depending on coverage
 - **Time**: 2-8 hours per sample depending on coverage and resources
 
-## Workflow Tutorial
+# Workflow Tutorial
 Consult the documentation directory for an in-depth [tutorial](docs/savor_tutorial.md).
 
 ## Citation
@@ -167,10 +234,6 @@ If you use SaVor, please cite in addition to all the tools implemented:
 Mugoya, Trevor, and Arun Sethuraman. “SaVor - A Reproducible Structural Variant Calling and Benchmarking Platform from Short-Read Data.” Preprint, bioRxiv, December 1, 2025. https://doi.org/10.1101/2025.11.26.690832.
 
 ```
-
-## License
-
-[TBD]
 
 ## Support
 
