@@ -5,10 +5,10 @@
 # path to the sample metadata CSV
 # To use user-provided BAM files, add bamPath and baiPath columns to this CSV
 # See config/samples_with_bam.csv.template for an example
-samples: "config/fastq.csv" 
+samples: "tests/config/fastq.csv" 
 
 # path to csv file with list of contigs to include (Required by wham sv caller)
-include_contigs: "config/include_contigs.csv"
+include_contigs: "tests/config/include_contigs.csv"
 
 # Check for refPath column in samples.csv and copy reference files if present
 use_custom_reference: true
