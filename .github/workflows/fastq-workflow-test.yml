@@ -28,8 +28,6 @@ jobs:
           test -f Snakefile
           test -f tests/config/fastq.yaml
           test -f tests/config/fastq.csv
-          test -f tests/config/bam.yaml
-          test -f tests/config/bam.csv
           test -f workflow-profiles/ci/config.yaml
           test -d tests/bams
           test -d tests/REFERENCE
