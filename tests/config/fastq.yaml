@@ -1,0 +1,49 @@
+##############################
+# Variables you need to change
+##############################
+
+# path to the sample metadata CSV
+# To use user-provided BAM files, add bamPath and baiPath columns to this CSV
+# See config/samples_with_bam.csv.template for an example
+samples: "config/fastq.csv" 
+
+# path to csv file with list of contigs to include (Required by wham sv caller)
+include_contigs: "config/include_contigs.csv"
+
+# Check for refPath column in samples.csv and copy reference files if present
+use_custom_reference: true
+
+user_provided_bams: false
+
+##############################
+# Optional configuration
+##############################
+
+# Enable/disable read sorting (useful for some datasets)
+sort_reads: false
+
+# Enable/disable duplicate marking
+# When using user-provided BAM files, this setting is ignored
+mark_duplicates: true
+
+# Set a temporary directory for large files (optional)
+# bigtmp: "/tmp"
+
+# SV Call Merge Options.
+# Report callers supported by at least N callers, where N can be 1, 2, or 3.
+# N=1 Report calls supported by at least 1 caller (union of all callers)
+# N=2 Report calls supported by at least 2 callers
+# N=3 Report calls supported by all 3 callers (intersection of all callers) - Default
+sv_merge: 1
+
+##############################
+# Benchmarking (optional)
+##############################
+
+# Enable benchmarking against truth sets
+svBenchmark: false
+
+# Benchmark Truth set paths (only needed if svBenchmark: true)
+deletions: "benchmark_truth/deletions.vcf.gz"
+duplications: "benchmark_truth/duplications.vcf.gz" 
+inversions: "benchmark_truth/inversions.vcf.gz"
