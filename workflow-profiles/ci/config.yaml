@@ -1,0 +1,9 @@
+use-conda: True
+# conda-frontend: mamba
+local-cores: 4
+set-threads:
+  get_fastq_pe: 4
+  fastp: 4
+  bwa_map: 4
+  dedup: 4
+  wham_call: 4
