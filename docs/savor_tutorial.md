@@ -12,19 +12,33 @@ This tutorial assumes you have;
 
 ## Step 0: Download Reference Sequence and BAM Files.
 
-Create a new directory and name it `REFERENCE`. Download the TAIR10 reference genome from this [link](https://drive.google.com/file/d/1X9S57uUYM7A1Vxc8C2XKeR4Hk-tkFU6l/view?usp=drive_link) and move it into the `REFERENCE` directory. Additionally, create an empty directory named `bams/` and download all files from this [Google Drive](https://drive.google.com/drive/folders/1v5DyYavAvpMPYInNnZxpix4m9zvk7jkr?usp=sharing) folder into it.
+Change directory into the `SaVor` repo root directory. Create a new directory and name it `REFERENCE` and another directory named `bams/`. In order to download the tutorial data, run the following commands in your terminal.
+
+```bash
+# Install gdown, a command line tool to download files from Google Drive.
+pip install gdown
+
+# Download the tutorial data
+gdown https://drive.google.com/drive/folders/1ZZhS3nRH0XJbpVIZpgbx_NQjUkCvnI4U
+
+# Copy over tutorial data into the bams and REFERENCE directories you created.
+mv SaVor_Tutorial_Files/bams/* bams/
+mv SaVor_Tutorial_Files/REFERENCE/* REFERENCE/
+
+#Clean up download folder
+rm -rf SaVor_Tutorial_Files/
+```
 
 
 ## Step 1: Setup the workflow `config.yaml`
 
 
-Change into the `config` directory and edit the following options in the `config.yaml` file with a text editor of your choice.
+A tutorial configuration file has been provided at `config/tutorial-config.yaml`. Below are the explanations of the attributes.
 
-1. `samples:` - Edit this path to point to the `test.csv` sample sheet. 
+1. `samples:` - A relative or absolute path to a workflow sample sheet CSV file. A sample sheet has been provided at `config/bam_samples.csv`. Below is a preview of the tutorial sample sheet.
 
 
 >[!NOTE]
-> Create a new file in the `config` directory with the following content and name it `test.csv`
 > ```csv
 >Run,BioSample,LibraryName,refGenome,refPath,bamPath,baiPath
 >SRR1945442,SAMN03326286,SAMN03326286,GCF_000001735.3,REFERENCE/TAIR10_REF.fna,bams/SAMN03326286_final.bam,bams/SAMN03326286_final.bam.bai
@@ -34,28 +48,19 @@ Change into the `config` directory and edit the following options in the `config
 >```
 
 
-2. `include_contigs:` - Edit this path to point to the file `include_contigs.csv` containing the contig/chromosome IDs of the TAIR10 Reference.
+2. `include_contigs:` - A path pointing to the `include_contigs.csv` file containing the contig/chromosome IDs of the TAIR10 Reference.
 
-While in the `config` directory, create an empty file with all the contig IDs of your reference genome. Below are the contig IDs for the TAIR10 reference you downloaded earlier.
-
-```
-Chr1
-Chr2
-Chr3
-Chr4
-Chr5
-```
 Alternatively, you can easily determine the contig IDs from the reference file itself using the `grep` command.
 
 ```bash
-grep "^>" ../REFERENCE/TAIR10_REF.fna > include_contigs.csv
+grep "^>" REFERENCE/TAIR10_REF.fna > include_contigs.csv
 ```
 
-3. `use_custom_reference:` = Set this to `True` to enable the tutorial reference genome.
+3. `use_custom_reference:` = Set to `True` to enable the tutorial reference genome.
 
-4. `user_provided_bams:` = Set this to `True` to enable the use of user-provided BAM files.
+4. `user_provided_bams:` = Set to `True` to enable the use of user-provided BAM files.
 
-5. `mark_duplicates:` = Set this to `False` since we are using user-provided BAM files that are already marked for duplicates.
+5. `mark_duplicates:` = Set to `False` since we are using user-provided BAM files that are already marked for duplicates.
 
 6. `sv_merge` - Change the value to `1` to generate a union set of SVs of the 4 samples.
 
@@ -65,7 +70,7 @@ grep "^>" ../REFERENCE/TAIR10_REF.fna > include_contigs.csv
 
 ## Step 3: Perform a Dry Run
 
-Change out of the `config` directory and into the SaVor root directory. Next, activate the snakemake conda/mamba environment unless its already active. Run the following Snakemake command to generate a list of jobs SaVor will execute. This should execute in a couple of seconds. If you encounter any errors, ensure you are in the repository root directory and verify whether you have all necessary configuration and data files present.
+Next, activate the snakemake conda/mamba environment unless its already active. Run the following Snakemake command to generate a list of jobs SaVor will execute. This should execute in a couple of seconds. If you encounter any errors, ensure you are in the repository root directory and verify whether you have all necessary configuration and data files present.
 
 ```bash
 snakemake --cores 1 -np --workflow-profile workflow-profiles/default/ --configfile config/tutorial-config.yaml
