@@ -1,0 +1,51 @@
+name: SaVor FASTQ workflow test
+
+on:
+  pull_request:
+  push:
+    branches: [Development]
+  schedule:
+    - cron: '17 0 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  run-workflow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          lfs: true
+          persist-credentials: false
+
+      - name: Check CI inputs
+        run: |
+          test -f Snakefile
+          test -f tests/config/fastq.yaml
+          test -f tests/config/fastq.csv
+          test -f tests/config/bam.yaml
+          test -f tests/config/bam.csv
+          test -d tests/bams
+          test -d tests/REFERENCE
+          test -d tests/READS
+          test -d workflow-profiles/ci
+
+      - name: Test FASTQ workflow
+        uses: snakemake/snakemake-github-action@v2.1.2
+        with:
+          directory: '.'
+          snakefile: 'Snakefile'
+          snakemake-version: '9.11.4'
+          args: >-
+            --cores 4
+            --sdm conda
+            --conda-cleanup-pkgs cache
+            --configfile tests/config/fastq.yaml
+            --workflow-profile workflow-profiles/ci/
+            --rerun-incomplete
+          show-disk-usage-on-error: true
