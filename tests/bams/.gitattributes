@@ -1,0 +1,8 @@
+SAMN03326286_final.bam filter=lfs diff=lfs merge=lfs -text
+SAMN03326287_final.bam filter=lfs diff=lfs merge=lfs -text
+SAMN03326288_final.bam filter=lfs diff=lfs merge=lfs -text
+SAMN03326289_final.bam filter=lfs diff=lfs merge=lfs -text
+SAMN03326286_final.bam.bai filter=lfs diff=lfs merge=lfs -text
+SAMN03326287_final.bam.bai filter=lfs diff=lfs merge=lfs -text
+SAMN03326288_final.bam.bai filter=lfs diff=lfs merge=lfs -text
+SAMN03326289_final.bam.bai filter=lfs diff=lfs merge=lfs -text

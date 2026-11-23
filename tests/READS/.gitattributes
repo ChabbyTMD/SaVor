@@ -1,0 +1,8 @@
+SRR1945442_2.fastq.gz filter=lfs diff=lfs merge=lfs -text
+SRR1945443_1.fastq.gz filter=lfs diff=lfs merge=lfs -text
+SRR1945443_2.fastq.gz filter=lfs diff=lfs merge=lfs -text
+SRR1945444_1.fastq.gz filter=lfs diff=lfs merge=lfs -text
+SRR1945444_2.fastq.gz filter=lfs diff=lfs merge=lfs -text
+SRR1945445_1.fastq.gz filter=lfs diff=lfs merge=lfs -text
+SRR1945445_2.fastq.gz filter=lfs diff=lfs merge=lfs -text
+SRR1945442_1.fastq.gz filter=lfs diff=lfs merge=lfs -text
