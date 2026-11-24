@@ -8,8 +8,8 @@
 
 
 [![Static Badge](https://img.shields.io/badge/DOI-doi.org%2F10.1101%2F2025.11.26.690832-09204a?style=for-the-badge)](https://www.biorxiv.org/content/10.1101/2025.11.26.690832v1)
-[![Jupyter Book Deployment](https://img.shields.io/github/actions/workflow/status/ChabbyTMD/SaVor/.github%2Fworkflows%2Fdeploy.yml?style=for-the-badge
-)](https://github.com/ChabbyTMD/SaVor/actions/workflows/deploy.yml)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ChabbyTMD/SaVor/.github%2Fworkflows%2Fdeploy.yml?style=for-the-badge&label=Tutorial-Site-Build)
+
 
 </div>
 
