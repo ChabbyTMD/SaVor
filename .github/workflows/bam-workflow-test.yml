@@ -4,6 +4,13 @@ on:
   pull_request:
   push:
     branches: [Development]
+    paths:
+      - 'rules/**'
+      - 'tests/**'
+      - 'workflow-profiles/**'
+      - 'envs/**'
+      - '.github/workflows/**'
+      - 'Snakefile'
   schedule:
     - cron: '17 0 1 * *'
   workflow_dispatch:

@@ -3,6 +3,7 @@
 
 name: Jupyter Book (via myst) GitHub Pages Deploy
 on:
+  pull_request:
   push:
     # Runs on pushes targeting the default branch
     branches: [main]
