@@ -39,11 +39,11 @@
 - **Conda environments**: All dependencies managed through conda/mamba
 - **Flexible input**: Support for FASTQ files (SRA or local) or user-provided BAM files
 
-## Directory Structure
+## Workflow Directory Structure
 
 ```{text}
-SaVor_Standalone/
-├── Snakefile                 # Main workflow file
+SaVor/
+├── Snakefile                # Main workflow file
 ├── config/
 │   ├── config.yaml          # Configuration file
 │   ├── samples.csv          # Sample metadata
@@ -64,6 +64,8 @@ SaVor_Standalone/
     ├── delly.yaml
     ├── wham.yaml
     ├── survivor.yaml
+    ├── svtyper.yaml
+    ├── minibwa.yaml
     └── truvari.yaml
 ```
 
