@@ -39,11 +39,11 @@
 - **Conda environments**: All dependencies managed through conda/mamba
 - **Flexible input**: Support for FASTQ files (SRA or local) or user-provided BAM files
 
-## Directory Structure
+## Workflow Directory Structure
 
 ```{text}
-SaVor_Standalone/
-├── Snakefile                 # Main workflow file
+SaVor/
+├── Snakefile                # Main workflow file
 ├── config/
 │   ├── config.yaml          # Configuration file
 │   ├── samples.csv          # Sample metadata
@@ -64,6 +64,8 @@ SaVor_Standalone/
     ├── delly.yaml
     ├── wham.yaml
     ├── survivor.yaml
+    ├── svtyper.yaml
+    ├── minibwa.yaml
     └── truvari.yaml
 ```
 
@@ -96,6 +98,18 @@ conda activate snakemake
 ```
 
 ## Usage
+
+### Workflow Setup and Execution Video Walkthrough
+
+<div align="center">
+
+<!-- [![Watch the video](https://raw.githubusercontent.com/ChabbyTMD/SaVor/main/img/savor_logo.png)](https://drive.google.com/file/d/1bi0S8iJfFODMw6kyg4zIrSNWbd2KLsjE/preview) -->
+[![Watch the demo](https://img.youtube.com/vi/rF49KaolsiI/maxresdefault.jpg)](https://youtu.be/rF49KaolsiI)
+
+</div>
+
+### Workflow Tutorial
+Consult the documentation directory for an in-depth [tutorial](docs/savor_tutorial.md).
 
 ### Workflow Setup
 
@@ -232,8 +246,6 @@ To enable benchmarking against truth sets:
 - **Storage**: ~10-50GB per sample depending on coverage
 - **Time**: 2-8 hours per sample depending on coverage and resources
 
-# Workflow Tutorial
-Consult the documentation directory for an in-depth [tutorial](docs/savor_tutorial.md).
 
 ## Citation
 
