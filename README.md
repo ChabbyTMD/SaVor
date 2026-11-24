@@ -99,6 +99,17 @@ conda activate snakemake
 
 ## Usage
 
+### Workflow Setup and Execution Video Walkthrough
+
+<div align="center">
+
+<iframe src="https://drive.google.com/file/d/1bi0S8iJfFODMw6kyg4zIrSNWbd2KLsjE/preview" width="800" height="450" allow="autoplay; fullscreen" frameborder="0"></iframe>
+
+</div>
+
+### Workflow Tutorial
+Consult the documentation directory for an in-depth [tutorial](docs/savor_tutorial.md).
+
 ### Workflow Setup
 
 1. Create a `samplesheet.csv` file in the `config/` directory. Depending on your input data, the samplesheet should include the following column headers:
@@ -234,8 +245,6 @@ To enable benchmarking against truth sets:
 - **Storage**: ~10-50GB per sample depending on coverage
 - **Time**: 2-8 hours per sample depending on coverage and resources
 
-# Workflow Tutorial
-Consult the documentation directory for an in-depth [tutorial](docs/savor_tutorial.md).
 
 ## Citation
 
