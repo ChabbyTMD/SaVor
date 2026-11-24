@@ -103,7 +103,7 @@ conda activate snakemake
 
 <div align="center">
 
-<iframe src="https://drive.google.com/file/d/1bi0S8iJfFODMw6kyg4zIrSNWbd2KLsjE/preview" width="800" height="450" allow="autoplay; fullscreen" frameborder="0"></iframe>
+[![Watch the video](https://raw.githubusercontent.com/ChabbyTMD/SaVor/main/img/savor_log.png)](https://drive.google.com/file/d/1bi0S8iJfFODMw6kyg4zIrSNWbd2KLsjE/preview)
 
 </div>
 
