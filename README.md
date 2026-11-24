@@ -104,7 +104,7 @@ conda activate snakemake
 <div align="center">
 
 <!-- [![Watch the video](https://raw.githubusercontent.com/ChabbyTMD/SaVor/main/img/savor_logo.png)](https://drive.google.com/file/d/1bi0S8iJfFODMw6kyg4zIrSNWbd2KLsjE/preview) -->
-<iframe width="560" height="315" src="https://drive.google.com/file/d/1bi0S8iJfFODMw6kyg4zIrSNWbd2KLsjE/" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+[![Watch the demo](https://img.youtube.com/vi/rF49KaolsiI/maxresdefault.jpg)](https://www.youtube.com/watch?v=rF49KaolsiI)
 
 </div>
 
